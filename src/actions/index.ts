@@ -1,3 +1,4 @@
+import { db } from "@/db";
 import {
   createSafeActionClient,
   DEFAULT_SERVER_ERROR_MESSAGE,
@@ -9,10 +10,11 @@ export const actionClient = createSafeActionClient({
     console.error("Action error:", e.message);
     return DEFAULT_SERVER_ERROR_MESSAGE;
   },
-}).use(({ next }) => next({ ctx: { gh: new Octokit() } })); // github client
+})
+  .use(({ next }) => next({ ctx: { gh: new Octokit() } })) // github client
+  .use(({ next }) => next({ ctx: { db } })); // drizzle client
 
 /* TODO:
  * Things to add to the action client's context:
  * - Mastra instance
- * - DB instance
  */

@@ -2,9 +2,13 @@
 
 import { z } from "zod";
 import { actionClient } from ".";
+import { repos } from "@/db/schema/repos";
+import { eq, sql } from "drizzle-orm";
+import { sessionRepos } from "@/db/schema/session-repos";
 
 const inputSchema = z.object({
   repository: z.string(),
+  sessionId: z.string().uuid(),
 });
 
 const transformedSchema = inputSchema.transform(
@@ -27,13 +31,60 @@ export const validateRepositoryAction = actionClient
   .action(async ({ ctx, parsedInput }) => {
     const [owner, repo] = transformedSchema.parse(parsedInput);
     const res = await ctx.gh.rest.repos.get({ owner, repo });
+    const repoName = res.data.full_name;
+
+    // check if repo is indexed
+    const indexedRepo = await ctx.db.query.repos.findFirst({
+      where: (t, h) => h.eq(t.name, repoName),
+      with: {
+        sessionRepos: true,
+      },
+    });
+
+    if (indexedRepo) {
+      await ctx.db.transaction(async (tx) => {
+        // increase popularity rank of repo
+        await tx
+          .update(repos)
+          .set({ rank: sql`${repos.rank} + 1` })
+          .where(eq(repos.name, repoName));
+
+        // associate repo with current session
+        const isSessionRepo = indexedRepo.sessionRepos.some(
+          (s) => s.sessionId === parsedInput.sessionId,
+        );
+
+        if (!isSessionRepo) {
+          await tx.insert(sessionRepos).values({
+            sessionId: parsedInput.sessionId,
+            repoId: indexedRepo.id,
+          });
+        }
+      });
+    } else {
+      await ctx.db.transaction(async (tx) => {
+        // save repo details
+        const [insertedRepo] = await tx
+          .insert(repos)
+          .values({
+            name: repoName,
+            description: res.data.description,
+            language: res.data.language,
+            stars: res.data.stargazers_count,
+            forks: res.data.forks,
+            ownerAvatar: res.data.owner.avatar_url,
+            rank: 1,
+          })
+          .returning({ repoId: repos.id });
+
+        await tx.insert(sessionRepos).values({
+          repoId: insertedRepo.repoId,
+          sessionId: parsedInput.sessionId,
+        });
+      });
+    }
 
     /*TODO:
-     * 1. Save validated repository details from gh
-     *  - owner's avatar, repo's full name, description, language, stars and forks
-     *  - unique session_id
-     *  - if repo exists in storage, increase repo request frequency
-     *    - This will help us keep track of popular repos and show them on home screen
      * 2. Trigger background processing jobs
      *  - Code understanding job
      *  - Documentation intelligence job
@@ -41,5 +92,6 @@ export const validateRepositoryAction = actionClient
      *  - Knowledge Graph job
      */
 
-    return res;
+    if (res.status === 200) return res.data;
+    throw new Error(res.status);
   });
