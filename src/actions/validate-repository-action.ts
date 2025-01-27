@@ -5,6 +5,7 @@ import { actionClient } from ".";
 import { repos } from "@/db/schema/repos";
 import { eq, sql } from "drizzle-orm";
 import { sessionRepos } from "@/db/schema/session-repos";
+import { redirect } from "next/navigation";
 
 const inputSchema = z.object({
   repository: z.string(),
@@ -41,7 +42,11 @@ export const validateRepositoryAction = actionClient
       },
     });
 
+    let repoId: number;
+
     if (indexedRepo) {
+      repoId = indexedRepo.id;
+
       await ctx.db.transaction(async (tx) => {
         // increase popularity rank of repo
         await tx
@@ -62,7 +67,7 @@ export const validateRepositoryAction = actionClient
         }
       });
     } else {
-      await ctx.db.transaction(async (tx) => {
+      repoId = await ctx.db.transaction(async (tx) => {
         // save repo details
         const [insertedRepo] = await tx
           .insert(repos)
@@ -81,6 +86,8 @@ export const validateRepositoryAction = actionClient
           repoId: insertedRepo.repoId,
           sessionId: parsedInput.sessionId,
         });
+
+        return insertedRepo.repoId;
       });
     }
 
@@ -92,6 +99,9 @@ export const validateRepositoryAction = actionClient
      *  - Knowledge Graph job
      */
 
-    if (res.status === 200) return res.data;
+    if (res.status === 200) {
+      return redirect(`/repo/${repoId}`);
+    }
+
     throw new Error(res.status);
   });
