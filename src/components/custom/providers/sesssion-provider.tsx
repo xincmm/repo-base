@@ -2,7 +2,14 @@
 
 import { createSessionAction } from "@/actions/create-session-action";
 import { useAction } from "next-safe-action/hooks";
-import { createContext, useContext, useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { v4 as uuidV4 } from "uuid";
 
 type SessionContextType = {
@@ -42,7 +49,29 @@ export const SessionProvider: React.FC<React.PropsWithChildren> = ({
 
   return (
     <SessionContext.Provider value={{ sessionId }}>
-      {children}
+      <EnsureSessionIdSearchParam>{children}</EnsureSessionIdSearchParam>
     </SessionContext.Provider>
   );
+};
+
+const EnsureSessionIdSearchParam: React.FC<PropsWithChildren> = ({
+  children,
+}) => {
+  const path = usePathname();
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const fallbackSesisonId = useSession();
+
+  const sessionIdFromSearchParams = searchParams.get("sessionId");
+
+  useEffect(() => {
+    if (!sessionIdFromSearchParams) {
+      router.push(path + "?sessionId=" + fallbackSesisonId);
+    }
+  }, [fallbackSesisonId, path, router, sessionIdFromSearchParams]);
+
+  if (!sessionIdFromSearchParams) return null;
+
+  return <>{children}</>;
 };

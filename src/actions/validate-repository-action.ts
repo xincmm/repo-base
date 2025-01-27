@@ -100,7 +100,7 @@ export const validateRepositoryAction = actionClient
      */
 
     if (res.status === 200) {
-      return redirect(`/repo/${repoId}`);
+      return redirect(`/repo/${repoId}?sessionId=${parsedInput.sessionId}`);
     }
 
     throw new Error(res.status);

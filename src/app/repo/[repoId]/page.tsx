@@ -1,14 +1,23 @@
-import { db } from "@/db";
+import { LeftSidebar } from "@/components/custom/repo/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default async function RepoPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ repoId: string }>;
+  searchParams: Promise<{ repoId?: string; sessionId: string }>;
 }) {
-  const repoId = (await params).repoId;
-  const repo = await db.query.repos.findFirst({
-    where: (t, h) => h.eq(t.id, Number(repoId)),
-  });
+  const { sessionId } = await searchParams;
+  const { repoId } = await params;
 
-  return <div>{JSON.stringify(repo, null, 2)}</div>;
+  return (
+    <SidebarProvider>
+      <LeftSidebar sessionId={sessionId} repoId={repoId} />
+
+      <main>
+        <div className="min-h-screen bg-red w-full">Hello there</div>
+      </main>
+    </SidebarProvider>
+  );
 }

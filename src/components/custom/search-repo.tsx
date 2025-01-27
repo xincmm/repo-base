@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { validateRepositoryAction } from "@/actions/validate-repository-action";
 import { useState } from "react";
-import { useSession } from "./sesssion-provider";
+import { useSession } from "./providers/sesssion-provider";
 
 export const SearchRepo: React.FC = () => {
   const [repository, setRepository] = useState("");
