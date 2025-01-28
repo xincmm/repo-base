@@ -7,6 +7,9 @@ import { eq, sql } from "drizzle-orm";
 import { sessionRepos } from "@/db/schema/session-repos";
 import { redirect } from "next/navigation";
 import { repoLanguages } from "@/db/schema/repo-languages";
+import { getFileTreeTask } from "@/trigger/example";
+import { tasks } from "@trigger.dev/sdk/v3";
+import { repoTasks } from "@/db/schema/repo-tasks";
 
 const inputSchema = z.object({
   repository: z.string(),
@@ -41,7 +44,10 @@ export const validateRepositoryAction = actionClient
       }),
     ]);
 
+    // ghRepo.data.master_branch
+
     const repoName = ghRepo.data.full_name;
+    const defaultBranch = ghRepo.data.default_branch;
 
     // check if repo is indexed
     const indexedRepo = await ctx.db.query.repos.findFirst({
@@ -51,10 +57,10 @@ export const validateRepositoryAction = actionClient
       },
     });
 
-    let repoId: number;
+    const utilStore: Record<string, number | string> = {};
 
     if (indexedRepo) {
-      repoId = indexedRepo.id;
+      utilStore.repoId = indexedRepo.id;
 
       await ctx.db.transaction(async (tx) => {
         // increase popularity rank of repo
@@ -75,8 +81,12 @@ export const validateRepositoryAction = actionClient
           });
         }
       });
+
+      return redirect(
+        `/repo/${utilStore.repoId}?sessionId=${parsedInput.sessionId}`,
+      );
     } else {
-      repoId = await ctx.db.transaction(async (tx) => {
+      await ctx.db.transaction(async (tx) => {
         // save repo details
         const [insertedRepo] = await tx
           .insert(repos)
@@ -87,11 +97,14 @@ export const validateRepositoryAction = actionClient
             stars: ghRepo.data.stargazers_count,
             forks: ghRepo.data.forks,
             ownerAvatar: ghRepo.data.owner.avatar_url,
+            licenseName: ghRepo.data.license?.name,
+            licenseUrl: ghRepo.data.license?.html_url,
             rank: 1,
           })
           .returning({ repoId: repos.id });
 
-        Promise.all([
+        const [, , handle] = await Promise.all([
+          // insert repository languages
           tx.insert(repoLanguages).values(
             Object.entries(ghRepoLangs.data).map(([language, bytes]) => ({
               language,
@@ -99,27 +112,43 @@ export const validateRepositoryAction = actionClient
               repoId: insertedRepo.repoId,
             })),
           ),
+          // insert relation of current session to the repo
           tx.insert(sessionRepos).values({
             repoId: insertedRepo.repoId,
             sessionId: parsedInput.sessionId,
           }),
+          // trigger background task to get repository files
+          tasks.trigger(getFileTreeTask.id, {
+            repoId: insertedRepo.repoId,
+            owner,
+            repo,
+            defaultBranch,
+          }),
         ]);
 
-        return insertedRepo.repoId;
+        // insert fileTree processing task id
+        tx.insert(repoTasks).values({
+          repoId: insertedRepo.repoId,
+          taskId: getFileTreeTask.id,
+          runId: handle.id,
+          taskToken: handle.publicAccessToken,
+        });
+
+        utilStore.repoId = insertedRepo.repoId;
+        utilStore.runId = handle.id;
+        utilStore.triggerToken = handle.publicAccessToken;
       });
+
+      return redirect(
+        `/repo/${utilStore.repoId}?sessionId=${parsedInput.sessionId}&runId=${utilStore.runId}&triggerToken=${utilStore.triggerToken}`,
+      );
     }
-
-    /*TODO:
-     * 2. Trigger background processing jobs
-     *  - Code understanding job
-     *  - Documentation intelligence job
-     *  - Development history
-     *  - Knowledge Graph job
-     */
-
-    if (ghRepo.status === 200) {
-      return redirect(`/repo/${repoId}?sessionId=${parsedInput.sessionId}`);
-    }
-
-    throw new Error(ghRepo.status);
   });
+
+/*TODO:
+ * 2. Trigger background processing jobs
+ *  - Code understanding job
+ *  - Documentation intelligence job
+ *  - Development history
+ *  - Knowledge Graph job
+ */

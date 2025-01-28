@@ -50,6 +50,34 @@
       "when": 1738056238423,
       "tag": "0006_quick_the_call",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1738059181536,
+      "tag": "0007_medical_captain_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1738065401064,
+      "tag": "0008_perfect_kate_bishop",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1738065606456,
+      "tag": "0009_calm_captain_america",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1738070140642,
+      "tag": "0010_optimal_killraven",
+      "breakpoints": true
     }
   ]
 }

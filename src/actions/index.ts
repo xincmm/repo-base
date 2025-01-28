@@ -1,9 +1,9 @@
 import { db } from "@/db";
+import { gh } from "@/lib/utils";
 import {
   createSafeActionClient,
   DEFAULT_SERVER_ERROR_MESSAGE,
 } from "next-safe-action";
-import { Octokit } from "octokit";
 
 export const actionClient = createSafeActionClient({
   handleServerError(e) {
@@ -11,7 +11,7 @@ export const actionClient = createSafeActionClient({
     return DEFAULT_SERVER_ERROR_MESSAGE;
   },
 })
-  .use(({ next }) => next({ ctx: { gh: new Octokit() } })) // github client
+  .use(({ next }) => next({ ctx: { gh } })) // github client
   .use(({ next }) => next({ ctx: { db } })); // drizzle client
 
 /* TODO:

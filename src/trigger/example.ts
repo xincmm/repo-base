@@ -1,4 +1,5 @@
-import { logger, task, wait } from "@trigger.dev/sdk/v3";
+import { logger, schemaTask, task, wait } from "@trigger.dev/sdk/v3";
+import { z } from "zod";
 
 export const helloWorldTask = task({
   id: "hello-world",
@@ -12,4 +13,15 @@ export const helloWorldTask = task({
       message: "Hello, world!",
     };
   },
+});
+
+export const getFileTreeTask = schemaTask({
+  id: "get-file-tree",
+  schema: z.object({
+    repoId: z.number(),
+    repo: z.string(),
+    owner: z.string(),
+    defaultBranch: z.string(),
+  }),
+  run: async (payload) => {},
 });

@@ -20,6 +20,7 @@ export const StatsCard: React.FC<StatsCardProps> = async ({ repoId }) => {
     with: {
       repoLanguages: {
         orderBy: (f, o) => o.desc(f.bytes),
+        limit: 10,
       },
     },
     columns: {
@@ -28,6 +29,8 @@ export const StatsCard: React.FC<StatsCardProps> = async ({ repoId }) => {
       forks: true,
       ownerAvatar: true,
       description: true,
+      licenseName: true,
+      licenseUrl: true,
     },
     orderBy: (f, o) => o.desc(f.createdAt),
   });
@@ -54,7 +57,7 @@ export const StatsCard: React.FC<StatsCardProps> = async ({ repoId }) => {
         )}
       </CardHeader>
       <CardContent className="divide-y">
-        <div className="w-full flex items-center flex-wrap gap-3 pb-4">
+        <div className="w-full flex items-center flex-wrap gap-2 pb-4">
           <Badge className="rounded-full gap-2">
             <Star className="size-3" />
             <span>{repoStats?.stars}</span>
@@ -67,12 +70,12 @@ export const StatsCard: React.FC<StatsCardProps> = async ({ repoId }) => {
 
           <Badge className="rounded-full gap-2">
             <Scale className="size-3" />
-            <span>MIT</span>
+            <span>{repoStats?.licenseName}</span>
           </Badge>
         </div>
         <div className="pt-2">
           <p className="text-sm">Languages</p>
-          <div className="flex w-full flex-wrap items-center mt-2 gap-3">
+          <div className="flex w-full flex-wrap items-center mt-2 gap-2">
             {repoStats?.repoLanguages.map((lang) => (
               <Badge key={lang.id} className="rounded-full gap-2">
                 {lang.language}
