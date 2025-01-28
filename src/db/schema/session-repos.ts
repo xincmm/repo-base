@@ -2,6 +2,7 @@ import { integer, pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
 import { sessions } from "./sessions";
 import { repos } from "./repos";
 import { relations } from "drizzle-orm";
+import { timestamps } from "../utils";
 
 export const sessionRepos = pgTable(
   "session_repos",
@@ -12,6 +13,7 @@ export const sessionRepos = pgTable(
     repoId: integer("repo_id").references(() => repos.id, {
       onDelete: "cascade",
     }),
+    ...timestamps,
   },
   (t) => [primaryKey({ columns: [t.repoId, t.sessionId] })],
 );

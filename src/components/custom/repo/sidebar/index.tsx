@@ -28,8 +28,6 @@ export const LeftSidebar: React.FC<LeftSidebarInterface> = ({
   return (
     <Sidebar side="left" collapsible="icon">
       <SidebarContent>
-        <SidebarSeparator />
-
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>

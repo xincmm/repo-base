@@ -6,6 +6,7 @@ import { repos } from "@/db/schema/repos";
 import { eq, sql } from "drizzle-orm";
 import { sessionRepos } from "@/db/schema/session-repos";
 import { redirect } from "next/navigation";
+import { repoLanguages } from "@/db/schema/repo-languages";
 
 const inputSchema = z.object({
   repository: z.string(),
@@ -31,8 +32,16 @@ export const validateRepositoryAction = actionClient
   .schema(inputSchema)
   .action(async ({ ctx, parsedInput }) => {
     const [owner, repo] = transformedSchema.parse(parsedInput);
-    const res = await ctx.gh.rest.repos.get({ owner, repo });
-    const repoName = res.data.full_name;
+
+    const [ghRepo, ghRepoLangs] = await Promise.all([
+      ctx.gh.rest.repos.get({ owner, repo }),
+      ctx.gh.rest.repos.listLanguages({
+        repo,
+        owner,
+      }),
+    ]);
+
+    const repoName = ghRepo.data.full_name;
 
     // check if repo is indexed
     const indexedRepo = await ctx.db.query.repos.findFirst({
@@ -73,19 +82,28 @@ export const validateRepositoryAction = actionClient
           .insert(repos)
           .values({
             name: repoName,
-            description: res.data.description,
-            language: res.data.language,
-            stars: res.data.stargazers_count,
-            forks: res.data.forks,
-            ownerAvatar: res.data.owner.avatar_url,
+            description: ghRepo.data.description,
+            language: ghRepo.data.language,
+            stars: ghRepo.data.stargazers_count,
+            forks: ghRepo.data.forks,
+            ownerAvatar: ghRepo.data.owner.avatar_url,
             rank: 1,
           })
           .returning({ repoId: repos.id });
 
-        await tx.insert(sessionRepos).values({
-          repoId: insertedRepo.repoId,
-          sessionId: parsedInput.sessionId,
-        });
+        Promise.all([
+          tx.insert(repoLanguages).values(
+            Object.entries(ghRepoLangs.data).map(([language, bytes]) => ({
+              language,
+              bytes,
+              repoId: insertedRepo.repoId,
+            })),
+          ),
+          tx.insert(sessionRepos).values({
+            repoId: insertedRepo.repoId,
+            sessionId: parsedInput.sessionId,
+          }),
+        ]);
 
         return insertedRepo.repoId;
       });
@@ -99,9 +117,9 @@ export const validateRepositoryAction = actionClient
      *  - Knowledge Graph job
      */
 
-    if (res.status === 200) {
+    if (ghRepo.status === 200) {
       return redirect(`/repo/${repoId}?sessionId=${parsedInput.sessionId}`);
     }
 
-    throw new Error(res.status);
+    throw new Error(ghRepo.status);
   });

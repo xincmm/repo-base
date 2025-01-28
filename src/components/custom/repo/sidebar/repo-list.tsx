@@ -19,6 +19,7 @@ export const RepoList: React.FC<RepoListInterface> = async ({
 }) => {
   const userSessionRepos = await db.query.sessionRepos.findMany({
     where: (t, h) => h.eq(t.sessionId, sessionId),
+    orderBy: (f, o) => o.desc(f.createdAt),
     with: {
       repo: {
         columns: {
