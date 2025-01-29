@@ -26,7 +26,7 @@ export const LeftSidebar: React.FC<LeftSidebarInterface> = ({
   sessionId,
 }) => {
   return (
-    <Sidebar side="left" collapsible="icon">
+    <Sidebar side="left" collapsible="icon" className="border-none">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>

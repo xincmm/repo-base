@@ -112,11 +112,13 @@ export const validateRepositoryAction = actionClient
               repoId: insertedRepo.repoId,
             })),
           ),
+
           // insert relation of current session to the repo
           tx.insert(sessionRepos).values({
             repoId: insertedRepo.repoId,
             sessionId: parsedInput.sessionId,
           }),
+
           // trigger background task to get repository files
           tasks.trigger(getFileTreeTask.id, {
             repoId: insertedRepo.repoId,

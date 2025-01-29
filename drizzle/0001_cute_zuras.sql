@@ -1,1 +1,0 @@
-DROP INDEX "repos_name_idx";

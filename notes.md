@@ -66,3 +66,26 @@ What does a good starting point look like?
 
 - Get basic stats and a chat agent with some tools for users to interact with.
 - Generate small summary with basic stats as repo description.
+
+## Thoughts at 2025-01-29 10:14
+
+Work on the core documentation understanding agent
+This agent will get all documentation related
+I've formulated a simple SQL query to get common documentation patterns.
+This is a nice place to start.
+
+I also need to start on the chat immediately
+Goal of today is to start chatting with available info.
+
+The general stats and the doc agent's first phase.
+
+How do we approach this?
+
+- Build out the core documentation agent/workflow
+  - It could be a general workflow. With the following logical steps
+    - Fetch core documentation related files
+    - Clean-up/deduplication of fetched files. Prioritizing root files.
+    - Readme's are all important, licenses need some filtering, the path context is important, but we don't need to redo the parsing, etc for each similar license.
+    - So this sort of calls for a path based approach, understanding path levels and docs at each level. Making sure all docs are understood and path contexts added to it.
+- Trying to tie it all together with the chat agent. The chat agent could be an orchestrator agent. It could have access to other agents, call them when needed. In this case, if there's a documentation based agent ready, the chat agent could ask that agent to provide some information about that. Questions relating to what might be available in readmes' license, contribution, contributor's list, authors, etc
+  - How does this documentation agent, store information? Does it build a summary doc of these things and save that for RAG?

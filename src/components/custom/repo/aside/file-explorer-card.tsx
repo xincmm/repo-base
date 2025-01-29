@@ -34,7 +34,10 @@ export const FileExplorerCard: React.FC<PropsWithChildren> = ({ children }) => {
   }, []);
 
   return (
-    <Card ref={cardRef} className="h-full">
+    <Card
+      ref={cardRef}
+      className="h-full bg-sidebar shadow-none rounded-none border-none"
+    >
       <CardHeader ref={cardHeaderRef} className="pb-4">
         <CardTitle className="flex items-center gap-2">
           <FolderTree className="size-4" />

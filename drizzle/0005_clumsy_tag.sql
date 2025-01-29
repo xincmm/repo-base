@@ -1,1 +1,0 @@
-ALTER TABLE "repo_languages" ADD COLUMN "bytes" integer NOT NULL;

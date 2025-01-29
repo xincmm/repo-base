@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { gh } from "@/lib/utils";
+import { mastra } from "@/mastra";
 import {
   createSafeActionClient,
   DEFAULT_SERVER_ERROR_MESSAGE,
@@ -11,6 +12,7 @@ export const actionClient = createSafeActionClient({
     return DEFAULT_SERVER_ERROR_MESSAGE;
   },
 })
+  .use(({ next }) => next({ ctx: { mastra } })) // mastra client
   .use(({ next }) => next({ ctx: { gh } })) // github client
   .use(({ next }) => next({ ctx: { db } })); // drizzle client
 
