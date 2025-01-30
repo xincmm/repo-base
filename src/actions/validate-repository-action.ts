@@ -128,13 +128,15 @@ export const validateRepositoryAction = actionClient
           }),
         ]);
 
-        // insert fileTree processing task id
-        tx.insert(repoTasks).values({
-          repoId: insertedRepo.repoId,
-          taskId: getFileTreeTask.id,
-          runId: handle.id,
-          taskToken: handle.publicAccessToken,
-        });
+        await tx
+          .insert(repoTasks)
+          .values({
+            repoId: insertedRepo.repoId,
+            taskId: getFileTreeTask.id,
+            runId: handle.id,
+            taskToken: handle.publicAccessToken,
+          })
+          .returning();
 
         utilStore.repoId = insertedRepo.repoId;
         utilStore.runId = handle.id;

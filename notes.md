@@ -1,5 +1,45 @@
 # Notes
 
+## Thoughts at 2025-01-30 13:51
+
+The ui is hooked up with the use chat. The agent is also set up and things are working as expected.
+
+Next steps:
+
+- handle ui sizing.
+  - wrap text messages, maybe look into css containers?
+  - wrap chat area with a scroll area and limit length
+  - co-ordinate the height of the text area to the height of the chat area
+  - render makrdown messages properly
+  - render role indicators next to the messages
+- build up agent capability.
+  - build tools.
+    - tools for embedded documentations
+    - tools for available stats, like stars, forks, etc
+    - tools for file tree exploration
+  - repo analysis
+    - commit history analysis agent/workflows
+    - pr and issues analysis agent/workflows
+    - more stats. code changes, commits, contributor ranking, etc agents/workflows
+
+## Thoughts at 2025-01-30 11:51
+
+Trying to figure out how to build out the chatting ui.
+The ai sdk, specifically the useChat hook seems to work well with mastra
+The general flow looks something like this:
+
+- Get messages from the agents memory. Can do this in a server component and pass down messages to the client component using the hook
+- use and endopint, instead of a server action to send messages
+- this means, to set up the chatting agent on an ai endpoint, instead of a server action
+- Submissins are sent automatically to the endopint /api/chat
+- call mastra instance from there as well, and send back a streaming response
+- so how do I set up the agent?
+  - The agent will get the repo id
+  - use that to determine the right table on the db to query against the embeddings
+  - that sounds like a tool call
+  - provide agent with tools while setting it up
+  - just show the messages now!
+
 ## Exploring the GitHub REST API
 
 ### Some endpoints of interest

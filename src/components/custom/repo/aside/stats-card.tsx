@@ -10,6 +10,7 @@ import { db } from "@/db";
 import { GitBranch, Star, GitFork, Scale } from "lucide-react";
 import Image from "next/image";
 import { ProcessDocumentation } from "../task-wrappers/process-documentation";
+import { getFileTreeTask } from "@/trigger/get-file-tree-task";
 
 interface StatsCardProps {
   repoId: number;
@@ -37,14 +38,25 @@ export const StatsCard: React.FC<StatsCardProps> = async ({ repoId }) => {
     orderBy: (f, o) => o.desc(f.createdAt),
   });
 
+  const fileTreeTask = await db.query.repoTasks.findFirst({
+    where: (f, o) =>
+      o.and(o.eq(f.taskId, getFileTreeTask.id), o.eq(f.repoId, repoId)),
+  });
+
+  console.log({ fileTreeTask });
+
   return (
     <>
-      <ProcessDocumentation
-        docsProcessingStatus={repoStats?.docsProcessingStatus ?? "not_started"}
-        repoId={Number(repoId)}
-        owner={repoStats?.name.split("/")[0] ?? ""}
-        repo={repoStats?.name.split("/")[1] ?? ""}
-      />
+      {fileTreeTask?.runId && fileTreeTask?.taskToken && repoStats?.name && (
+        <ProcessDocumentation
+          taskToken={fileTreeTask.taskToken}
+          runId={fileTreeTask.runId}
+          docsProcessingStatus={repoStats?.docsProcessingStatus}
+          repoId={Number(repoId)}
+          owner={repoStats.name.split("/")[0]}
+          repo={repoStats.name.split("/")[1]}
+        />
+      )}
       <Card className="bg-sidebar shadow-none border-none">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">

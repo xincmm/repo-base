@@ -19,4 +19,7 @@ export default defineConfig({
     },
   },
   dirs: ["./src/trigger"],
+  build: {
+    external: ["canvas", "onnxruntime-node", "sharp", "jsdom"],
+  },
 });

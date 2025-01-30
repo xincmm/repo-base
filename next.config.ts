@@ -5,6 +5,16 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ hostname: "avatars.githubusercontent.com" }],
   },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      sharp$: false,
+      "onnxruntime-node$": false,
+      canvas$: false,
+      jsdom$: false,
+    };
+    return config;
+  },
 };
 
 export default nextConfig;

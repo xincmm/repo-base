@@ -19,7 +19,7 @@ importers:
         version: 0.0.2-alpha.61(encoding@0.1.13)(react@19.0.0)(zod@3.24.1)
       '@mastra/rag':
         specifier: 0.0.2-alpha.70
-        version: 0.0.2-alpha.70(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-providers@3.734.0)(@huggingface/transformers@3.3.2)(canvas@2.11.2(encoding@0.1.13))(encoding@0.1.13)(gpt-tokenizer@2.8.1)(pathe@1.1.2)(pg@8.13.1)(react@19.0.0)(tree-sitter@0.22.4)(typescript@5.7.3)(web-tree-sitter@0.24.7)(ws@8.18.0)
+        version: 0.0.2-alpha.70(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-providers@3.734.0)(@huggingface/transformers@3.3.2)(canvas@3.1.0)(encoding@0.1.13)(gpt-tokenizer@2.8.1)(pathe@1.1.2)(pg@8.13.1)(pgvector@0.2.0)(react@19.0.0)(tree-sitter@0.22.4)(typescript@5.7.3)(web-tree-sitter@0.24.7)(ws@8.18.0)
       '@mastra/vector-pg':
         specifier: 0.0.1-alpha.13
         version: 0.0.1-alpha.13(encoding@0.1.13)(react@19.0.0)
@@ -47,6 +47,9 @@ importers:
       '@trigger.dev/sdk':
         specifier: 3.3.12
         version: 3.3.12(zod@3.24.1)
+      ai:
+        specifier: ^4.1.11
+        version: 4.1.11(react@19.0.0)(zod@3.24.1)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -83,6 +86,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      react-hotkeys-hook:
+        specifier: ^4.6.1
+        version: 4.6.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       tailwind-merge:
         specifier: ^2.6.0
         version: 2.6.0
@@ -114,6 +120,9 @@ importers:
       '@types/react-dom':
         specifier: ^19
         version: 19.0.3(@types/react@19.0.7)
+      canvas:
+        specifier: ^3.1.0
+        version: 3.1.0
       drizzle-kit:
         specifier: ^0.30.2
         version: 0.30.2
@@ -123,12 +132,27 @@ importers:
       eslint-config-next:
         specifier: 15.1.5
         version: 15.1.5(eslint@9.18.0(jiti@1.21.7))(typescript@5.7.3)
+      import-in-the-middle:
+        specifier: ^1.12.0
+        version: 1.12.0
+      jsdom:
+        specifier: ^25.0.1
+        version: 25.0.1(canvas@3.1.0)
       mastra:
         specifier: 0.1.57-alpha.122
         version: 0.1.57-alpha.122(@swc/helpers@0.5.15)(encoding@0.1.13)(react@19.0.0)
+      pgvector:
+        specifier: ^0.2.0
+        version: 0.2.0
       postcss:
         specifier: ^8
         version: 8.5.1
+      require-in-the-middle:
+        specifier: ^7.5.0
+        version: 7.5.0
+      sharp:
+        specifier: ^0.33.5
+        version: 0.33.5
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.17
@@ -3321,8 +3345,8 @@ packages:
     resolution: {integrity: sha512-kja8j7PjmncONqaTsB8fQ+wE2mSU2DJ9D4XKoJ5PFWIdRMa6SLSN1ff4mOr4jCbfRSsxR4keIiySJU0N9T5hIQ==}
     engines: {node: '>= 8.0.0'}
 
-  ai@4.1.9:
-    resolution: {integrity: sha512-EUc21jyV/2Fv0hEd4toLxQMxjTXBWjKnw16tpto12Vrg/EvkmfVSEvtwXDa+J70iPDmASxL10VKmJk/wnb6bZA==}
+  ai@4.1.11:
+    resolution: {integrity: sha512-390dahvdwt/kKCq63dyi3M7pq6iWVk9MpfY9C5+RpyDWb50tohUwxntnUvB4Y/cOXGn4Miavdo1g8JbCxsd7wg==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18 || ^19 || ^19.0.0-rc
@@ -3597,6 +3621,10 @@ packages:
   canvas@2.11.2:
     resolution: {integrity: sha512-ItanGBMrmRV7Py2Z+Xhs7cT+FNt5K0vPL4p9EZ/UX/Mu7hFbkxSjKF2KVtPwX7UYWp7dRKnrTvReflgrItJbdw==}
     engines: {node: '>=6'}
+
+  canvas@3.1.0:
+    resolution: {integrity: sha512-tTj3CqqukVJ9NgSahykNwtGda7V33VLObwrHfzT0vqJXu7J4d4C/7kQQW3fOEGDfZZoILPut5H00gOjyttPGyg==}
+    engines: {node: ^18.12.0 || >= 20.9.0}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -5437,6 +5465,9 @@ packages:
   node-addon-api@6.1.0:
     resolution: {integrity: sha512-+eawOlIgy680F0kBzPUNFhMZGtJ1YmqM6l4+Crf4IkImjYrO/mqPwRMh352g23uIaQKFItcQ64I7KMaJxHgAVA==}
 
+  node-addon-api@7.1.1:
+    resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
+
   node-addon-api@8.3.0:
     resolution: {integrity: sha512-8VOpLHFrOQlAH+qA0ZzuGRlALRA6/LVh8QJldbrC4DY0hXoMP0l4Acq8TzFC018HztWiRqyCEj2aTWY2UvnJUg==}
     engines: {node: ^18 || ^20 || >= 21}
@@ -5717,6 +5748,10 @@ packages:
   pgpass@1.0.5:
     resolution: {integrity: sha512-FdW9r/jQZhSeohs1Z3sI1yxFQNFvMcnmfuj4WBMUTxOrAyLMaTcE1aAMBiTlbMNaXvBCQuVi0R7hd8udDSP7ug==}
 
+  pgvector@0.2.0:
+    resolution: {integrity: sha512-ef9SggYLzgshzpsFHAha77ghSOucf1ebXcuvokgTQK6V01uihqGJv6i0+U+yjEgiDsiVtTdojDrqOHRcSmcECw==}
+    engines: {node: '>= 18'}
+
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
@@ -5958,6 +5993,12 @@ packages:
     peerDependencies:
       react: ^19.0.0
 
+  react-hotkeys-hook@4.6.1:
+    resolution: {integrity: sha512-XlZpbKUj9tkfgPgT9gA+1p7Ey6vFIZHttUjPqpTdyT5nqQ8mHL7elxvSbaC+dpSiHUSmr21Ya1mDxBZG3aje4Q==}
+    peerDependencies:
+      react: '>=16.8.1'
+      react-dom: '>=16.8.1'
+
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -6060,8 +6101,8 @@ packages:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
 
-  require-in-the-middle@7.4.0:
-    resolution: {integrity: sha512-X34iHADNbNDfr6OTStIAHWSAvvKQRYgLO6duASaVf7J2VA3lvmNYboAHOuLC2huav1IwgZJtyEcJCKVzFxOSMQ==}
+  require-in-the-middle@7.5.0:
+    resolution: {integrity: sha512-/Tvpny/RVVicqlYTKwt/GtpZRsPG1CmJNhxVKGz+Sy/4MONfXCVNK69MFgGKdUt0/324q3ClI2dICcPgISrC8g==}
     engines: {node: '>=8.6.0'}
 
   requires-port@1.0.0:
@@ -8641,7 +8682,7 @@ snapshots:
       '@pinecone-database/pinecone': 3.0.3
       '@types/express': 5.0.0
       '@upstash/redis': 1.34.3
-      ai: 4.1.9(react@19.0.0)(zod@3.24.1)
+      ai: 4.1.11(react@19.0.0)(zod@3.24.1)
       anthropic-vertex-ai: 1.0.2(encoding@0.1.13)(zod@3.24.1)
       cohere-ai: 7.15.4(encoding@0.1.13)
       date-fns: 3.6.0
@@ -8685,7 +8726,7 @@ snapshots:
       '@pinecone-database/pinecone': 3.0.3
       '@types/express': 5.0.0
       '@upstash/redis': 1.34.3
-      ai: 4.1.9(react@19.0.0)(zod@3.24.1)
+      ai: 4.1.11(react@19.0.0)(zod@3.24.1)
       anthropic-vertex-ai: 1.0.2(encoding@0.1.13)(zod@3.24.1)
       cohere-ai: 7.15.4(encoding@0.1.13)
       date-fns: 3.6.0
@@ -8764,7 +8805,7 @@ snapshots:
     dependencies:
       '@mastra/core': 0.1.27-alpha.80(encoding@0.1.13)(react@19.0.0)
       '@upstash/redis': 1.34.3
-      ai: 4.1.9(react@19.0.0)(zod@3.24.1)
+      ai: 4.1.11(react@19.0.0)(zod@3.24.1)
       pg: 8.13.1
       pg-pool: 3.7.0(pg@8.13.1)
       postgres: 3.4.5
@@ -8777,15 +8818,15 @@ snapshots:
       - supports-color
       - zod
 
-  '@mastra/rag@0.0.2-alpha.70(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-providers@3.734.0)(@huggingface/transformers@3.3.2)(canvas@2.11.2(encoding@0.1.13))(encoding@0.1.13)(gpt-tokenizer@2.8.1)(pathe@1.1.2)(pg@8.13.1)(react@19.0.0)(tree-sitter@0.22.4)(typescript@5.7.3)(web-tree-sitter@0.24.7)(ws@8.18.0)':
+  '@mastra/rag@0.0.2-alpha.70(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-providers@3.734.0)(@huggingface/transformers@3.3.2)(canvas@3.1.0)(encoding@0.1.13)(gpt-tokenizer@2.8.1)(pathe@1.1.2)(pg@8.13.1)(pgvector@0.2.0)(react@19.0.0)(tree-sitter@0.22.4)(typescript@5.7.3)(web-tree-sitter@0.24.7)(ws@8.18.0)':
     dependencies:
       '@llamaindex/core': 0.4.20(@aws-crypto/sha256-js@5.2.0)(@huggingface/transformers@3.3.2)(gpt-tokenizer@2.8.1)(js-tiktoken@1.0.16)(pathe@1.1.2)
       '@llamaindex/env': 0.1.25(@aws-crypto/sha256-js@5.2.0)(@huggingface/transformers@3.3.2)(gpt-tokenizer@2.8.1)(js-tiktoken@1.0.16)(pathe@1.1.2)
       '@mastra/core': 0.1.27-alpha.80(encoding@0.1.13)(react@19.0.0)
       '@paralleldrive/cuid2': 2.2.2
       js-tiktoken: 1.0.16
-      jsdom: 25.0.1(canvas@2.11.2(encoding@0.1.13))
-      llamaindex: 0.8.31(@aws-sdk/credential-providers@3.734.0)(@huggingface/transformers@3.3.2)(encoding@0.1.13)(pg@8.13.1)(tree-sitter@0.22.4)(typescript@5.7.3)(web-tree-sitter@0.24.7)(ws@8.18.0)
+      jsdom: 25.0.1(canvas@3.1.0)
+      llamaindex: 0.8.31(@aws-sdk/credential-providers@3.734.0)(@huggingface/transformers@3.3.2)(encoding@0.1.13)(pg@8.13.1)(pgvector@0.2.0)(tree-sitter@0.22.4)(typescript@5.7.3)(web-tree-sitter@0.24.7)(ws@8.18.0)
       zod: 3.24.1
     transitivePeerDependencies:
       - '@aws-crypto/sha256-js'
@@ -9589,7 +9630,7 @@ snapshots:
       '@opentelemetry/api-logs': 0.52.1
       '@types/shimmer': 1.2.0
       import-in-the-middle: 1.12.0
-      require-in-the-middle: 7.4.0
+      require-in-the-middle: 7.5.0
       semver: 7.6.3
       shimmer: 1.2.1
     transitivePeerDependencies:
@@ -9601,7 +9642,7 @@ snapshots:
       '@opentelemetry/api-logs': 0.55.0
       '@types/shimmer': 1.2.0
       import-in-the-middle: 1.12.0
-      require-in-the-middle: 7.4.0
+      require-in-the-middle: 7.5.0
       semver: 7.6.3
       shimmer: 1.2.1
     transitivePeerDependencies:
@@ -11112,7 +11153,7 @@ snapshots:
     dependencies:
       humanize-ms: 1.2.1
 
-  ai@4.1.9(react@19.0.0)(zod@3.24.1):
+  ai@4.1.11(react@19.0.0)(zod@3.24.1):
     dependencies:
       '@ai-sdk/provider': 1.0.6
       '@ai-sdk/provider-utils': 2.1.5(zod@3.24.1)
@@ -11434,6 +11475,11 @@ snapshots:
       - encoding
       - supports-color
     optional: true
+
+  canvas@3.1.0:
+    dependencies:
+      node-addon-api: 7.1.1
+      prebuild-install: 7.1.3
 
   ccount@2.0.1: {}
 
@@ -13063,7 +13109,7 @@ snapshots:
 
   jsbi@4.3.0: {}
 
-  jsdom@25.0.1(canvas@2.11.2(encoding@0.1.13)):
+  jsdom@25.0.1(canvas@3.1.0):
     dependencies:
       cssstyle: 4.2.1
       data-urls: 5.0.0
@@ -13087,7 +13133,7 @@ snapshots:
       ws: 8.18.0
       xml-name-validator: 5.0.0
     optionalDependencies:
-      canvas: 2.11.2(encoding@0.1.13)
+      canvas: 3.1.0
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -13205,7 +13251,7 @@ snapshots:
 
   lines-and-columns@1.2.4: {}
 
-  llamaindex@0.8.31(@aws-sdk/credential-providers@3.734.0)(@huggingface/transformers@3.3.2)(encoding@0.1.13)(pg@8.13.1)(tree-sitter@0.22.4)(typescript@5.7.3)(web-tree-sitter@0.24.7)(ws@8.18.0):
+  llamaindex@0.8.31(@aws-sdk/credential-providers@3.734.0)(@huggingface/transformers@3.3.2)(encoding@0.1.13)(pg@8.13.1)(pgvector@0.2.0)(tree-sitter@0.22.4)(typescript@5.7.3)(web-tree-sitter@0.24.7)(ws@8.18.0):
     dependencies:
       '@anthropic-ai/sdk': 0.32.1(encoding@0.1.13)
       '@aws-crypto/sha256-js': 5.2.0
@@ -13262,6 +13308,7 @@ snapshots:
       zod: 3.24.1
     optionalDependencies:
       pg: 8.13.1
+      pgvector: 0.2.0
     transitivePeerDependencies:
       - '@aws-sdk/credential-providers'
       - '@huggingface/transformers'
@@ -13608,6 +13655,8 @@ snapshots:
 
   node-addon-api@6.1.0: {}
 
+  node-addon-api@7.1.1: {}
+
   node-addon-api@8.3.0: {}
 
   node-domexception@1.0.0: {}
@@ -13916,6 +13965,8 @@ snapshots:
     dependencies:
       split2: 4.2.0
 
+  pgvector@0.2.0: {}
+
   picocolors@1.1.1: {}
 
   picomatch@2.3.1: {}
@@ -14187,6 +14238,11 @@ snapshots:
       react: 19.0.0
       scheduler: 0.25.0
 
+  react-hotkeys-hook@4.6.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
   react-is@16.13.1: {}
 
   react-remove-scroll-bar@2.3.8(@types/react@19.0.7)(react@19.0.0):
@@ -14310,7 +14366,7 @@ snapshots:
 
   require-from-string@2.0.2: {}
 
-  require-in-the-middle@7.4.0:
+  require-in-the-middle@7.5.0:
     dependencies:
       debug: 4.4.0
       module-details-from-path: 1.0.3

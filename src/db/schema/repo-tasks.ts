@@ -8,7 +8,9 @@ export const repoTasks = pgTable("repo_tasks", {
   taskId: text("task_id").notNull(),
   runId: text("run_id").notNull(),
   taskToken: text("task_token").notNull(),
-  repoId: integer("repo_id").references(() => repos.id),
+  repoId: integer("repo_id").references(() => repos.id, {
+    onDelete: "cascade",
+  }),
   ...timestamps,
 });
 
