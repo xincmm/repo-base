@@ -25,7 +25,7 @@ export default async function RepoPage({
         <LeftSidebar sessionId={sessionId} repoId={repoId} />
         <div className="flex h-screen w-full">
           <ChatAreaWrapper repoId={Number(repoId)} />
-          <aside className="w-full max-w-md p-2 bg-sidebar h-screen flex flex-col gap-2">
+          <aside className="w-full max-w-md p-2 bg-sidebar h-screen flex flex-col gap-2 shrink-0">
             <header className="text-lg font-semibold">Repository info</header>
             <hr />
             <StatsCard repoId={Number(repoId)} />
