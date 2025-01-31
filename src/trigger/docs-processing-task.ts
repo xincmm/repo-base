@@ -4,6 +4,9 @@ import { z } from "zod";
 
 export const docsProcessingTask = schemaTask({
   id: "docs-processing-task",
+  machine: {
+    preset: "small-2x",
+  },
   schema: z.object({
     repoId: z.number(),
     repo: z.string(),
