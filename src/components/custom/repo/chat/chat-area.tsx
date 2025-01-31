@@ -20,7 +20,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   const { messages, handleSubmit, input, handleInputChange } = useChat({
     id: String(repoId),
     api: `/api/chat?repoId=${repoId}`,
-    initialMessages,
+    initialMessages: initialMessages,
   });
 
   const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -73,8 +73,8 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
             {messages.map((m) => (
               <MessageViewer key={m.id} message={m} />
             ))}
+            <div className="mt-8" ref={messagesEndRef} />
           </div>
-          <div ref={messagesEndRef} />
         </ScrollArea>
 
         <form className="relative" action={() => handleSubmit()}>

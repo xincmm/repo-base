@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "db:gen": "pnpm drizzle-kit generate",
-    "db:migrate": "pnpm drizzle-kit migrate"
+    "db:migrate": "pnpm drizzle-kit migrate",
+    "db:studio": "pnpm drizzle-kit studio",
+    "trigger:dev": "pnpm dlx trigger.dev@latest dev",
+    "trigger:build": "pnpm dlx trigger.dev@latest build"
   },
   "dependencies": {
     "@mastra/core": "0.1.27-alpha.76",
