@@ -22,6 +22,6 @@ export default defineConfig({
   dirs: ["./src/trigger"],
   build: {
     extensions: [syncVercelEnvVars()],
-    external: ["canvas", "onnxruntime-node", "sharp", "jsdom"],
+    external: ["canvas", "onnxruntime-node", "sharp", "jsdom", "gh", "pg"],
   },
 });
