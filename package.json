@@ -11,7 +11,7 @@
     "db:migrate": "pnpm drizzle-kit migrate",
     "db:studio": "pnpm drizzle-kit studio",
     "trigger:dev": "pnpm dlx trigger.dev@latest dev",
-    "trigger:build": "pnpm dlx trigger.dev@latest build"
+    "trigger:deploy": "pnpm dlx trigger.dev@latest deploy"
   },
   "dependencies": {
     "@mastra/core": "0.1.27-alpha.76",

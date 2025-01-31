@@ -7,7 +7,7 @@ import { eq, sql } from "drizzle-orm";
 import { sessionRepos } from "@/db/schema/session-repos";
 import { redirect } from "next/navigation";
 import { repoLanguages } from "@/db/schema/repo-languages";
-import { getFileTreeTask } from "@/trigger/example";
+import { getFileTreeTask } from "@/trigger/get-file-tree-task";
 import { tasks } from "@trigger.dev/sdk/v3";
 import { repoTasks } from "@/db/schema/repo-tasks";
 
