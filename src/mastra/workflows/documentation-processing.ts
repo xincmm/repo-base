@@ -194,6 +194,7 @@ const chunkAndEmbed = new Step({
         if (!indexes.includes(`embeddings_${repoId}`)) {
           await pgVector.createIndex(`embeddings_${repoId}`, 1536);
         }
+        // TODO: Should I also save the actual text chunks?
         await pgVector.upsert(
           `embeddings_${repoId}`,
           allEmbeddings,

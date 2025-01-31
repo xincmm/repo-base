@@ -43,8 +43,6 @@ export const StatsCard: React.FC<StatsCardProps> = async ({ repoId }) => {
       o.and(o.eq(f.taskId, getFileTreeTask.id), o.eq(f.repoId, repoId)),
   });
 
-  console.log({ fileTreeTask });
-
   return (
     <>
       {fileTreeTask?.runId && fileTreeTask?.taskToken && repoStats?.name && (

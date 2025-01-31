@@ -7,11 +7,13 @@ The ui is hooked up with the use chat. The agent is also set up and things are w
 Next steps:
 
 - handle ui sizing.
+
   - wrap text messages, maybe look into css containers?
   - wrap chat area with a scroll area and limit length
   - co-ordinate the height of the text area to the height of the chat area
   - render makrdown messages properly
   - render role indicators next to the messages
+
 - build up agent capability.
   - build tools.
     - tools for embedded documentations

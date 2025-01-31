@@ -6,6 +6,7 @@ import { SendHorizontal } from "lucide-react";
 import { type Message, useChat } from "ai/react";
 import { useEffect, useRef, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { MessageViewer } from "./message";
 
 interface ChatAreaProps {
   repoId: number;
@@ -43,7 +44,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
     const calculateHeights = () => {
       const containerRect = container.getBoundingClientRect();
       const textareaRect = textarea.getBoundingClientRect();
-      const availableHeight = containerRect.height - (textareaRect.height + 32);
+      const availableHeight = containerRect.height - (textareaRect.height + 48);
       setMessagesHeight(`${availableHeight}px`);
     };
 
@@ -51,7 +52,6 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
     observer.observe(container);
     observer.observe(textarea);
 
-    // Initial calculation
     calculateHeights();
 
     return () => observer.disconnect();
@@ -66,12 +66,14 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
       <div id="top-part" className="h-7 flex items-center"></div>
       <div
         ref={containerRef}
-        className="w-full bg-background rounded-xl h-[calc(100vh-28px)] overflow-hidden, p-6 border flex flex-col gap-2"
+        className="w-full bg-background rounded-xl h-[calc(100vh-32px)] overflow-hidden, p-4 border flex flex-col gap-2"
       >
         <ScrollArea style={{ height: messagesHeight }} className="pr-3">
-          {messages.map((m) => (
-            <div key={m.id}>{m.content}</div>
-          ))}
+          <div className="space-y-2">
+            {messages.map((m) => (
+              <MessageViewer key={m.id} message={m} />
+            ))}
+          </div>
           <div ref={messagesEndRef} />
         </ScrollArea>
 

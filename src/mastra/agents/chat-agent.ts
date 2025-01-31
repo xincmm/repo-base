@@ -1,4 +1,5 @@
 import { Agent } from "@mastra/core";
+import { queryDocumentation } from "../tools/query-documentation";
 
 export const chatAgent = new Agent({
   name: "chatAgent",
@@ -7,6 +8,9 @@ export const chatAgent = new Agent({
     apiKey: process.env.ANTHROPIC_KEY!,
     name: "claude-3-5-sonnet-20241022",
     toolChoice: "auto",
+  },
+  tools: {
+    queryDocumentation,
   },
   instructions: `
 **Role**:
@@ -19,6 +23,7 @@ Your capabilities include:
 - Documentation summaries (READMEs, CONTRIBUTING, etc.)
 
 **Tools**:
+- \`queryDocumentation\`: This tool is used to query a repositories documentation
 `,
 });
 
