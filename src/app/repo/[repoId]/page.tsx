@@ -4,6 +4,7 @@ import { FileExplorer } from "@/components/custom/repo/aside/file-explorer";
 import { StatsCard } from "@/components/custom/repo/aside/stats-card";
 import { LeftSidebar } from "@/components/custom/repo/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { StatusBar } from "@/components/custom/repo/task-wrappers/status-bar";
 
 export default async function RepoPage({
   params,
@@ -24,8 +25,11 @@ export default async function RepoPage({
       <SidebarProvider>
         <LeftSidebar sessionId={sessionId} repoId={repoId} />
         <div className="flex h-screen w-full">
-          <ChatAreaWrapper repoId={Number(repoId)} />
-          <aside className="w-full max-w-md p-2 bg-sidebar h-screen flex flex-col gap-2 shrink-0">
+          <div className="py-2 bg-sidebar grow space-y-2">
+            <StatusBar repoId={Number(repoId)} />
+            <ChatAreaWrapper repoId={Number(repoId)} />
+          </div>
+          <aside className="w-full max-w-sm p-2 bg-sidebar h-screen flex flex-col gap-2 shrink-0">
             <header className="text-lg font-semibold">Repository info</header>
             <hr />
             <StatsCard repoId={Number(repoId)} />

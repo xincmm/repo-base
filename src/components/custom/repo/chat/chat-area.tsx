@@ -62,36 +62,32 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   }, [messages]);
 
   return (
-    <main className="grow bg-sidebar h-screen overflow-hidden py-2 space-y-2 flex flex-col">
-      <div id="top-part" className="h-7 flex items-center"></div>
-      <div
-        ref={containerRef}
-        className="w-full bg-background rounded-xl h-[calc(100vh-32px)] overflow-hidden, p-4 border flex flex-col gap-2"
-      >
-        <ScrollArea style={{ height: messagesHeight }} className="pr-3">
-          <div className="space-y-2">
-            {messages.map((m) => (
-              <MessageViewer key={m.id} message={m} />
-            ))}
-            <div className="mt-8" ref={messagesEndRef} />
-          </div>
-        </ScrollArea>
-
-        <form className="relative" action={() => handleSubmit()}>
-          <Textarea
-            autoFocus
-            ref={textareaRef}
-            value={input}
-            onChange={handleInputChange}
-            onKeyDown={handleEnter}
-            placeholder="Write something"
-            className="bg-sidebar border focus-visible:ring-ring/30 pr-8 shadow-lg max-h-80"
-          />
-          <Button size="xs" className="absolute bottom-2 right-2" type="submit">
-            <SendHorizontal className="-rotate-90 size-4" />
-          </Button>
-        </form>
-      </div>
+    <main
+      ref={containerRef}
+      className="bg-background rounded-xl h-[calc(100vh-32px-16px)] overflow-hidden p-4 border space-y-2 flex flex-col gap-2"
+    >
+      <ScrollArea style={{ height: messagesHeight }} className="pr-3">
+        <div className="space-y-2">
+          {messages.map((m) => (
+            <MessageViewer key={m.id} message={m} />
+          ))}
+          <div className="mt-8" ref={messagesEndRef} />
+        </div>
+      </ScrollArea>
+      <form className="relative" action={() => handleSubmit()}>
+        <Textarea
+          autoFocus
+          ref={textareaRef}
+          value={input}
+          onChange={handleInputChange}
+          onKeyDown={handleEnter}
+          placeholder="Write something"
+          className="bg-sidebar border focus-visible:ring-ring/30 pr-8 shadow-lg max-h-80"
+        />
+        <Button size="xs" className="absolute bottom-2 right-2" type="submit">
+          <SendHorizontal className="-rotate-90 size-4" />
+        </Button>
+      </form>
     </main>
   );
 };

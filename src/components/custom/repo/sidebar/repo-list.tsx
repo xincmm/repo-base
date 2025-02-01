@@ -37,7 +37,7 @@ export const RepoList: React.FC<RepoListInterface> = async ({
           <SidebarMenuButton isActive={repo?.id === Number(repoId)} asChild>
             <Link href={`/repo/${repo?.id}?sessionId=${sessionId}`}>
               <GitBranch />
-              {repo?.name}
+              <span className="truncate">{repo?.name}</span>
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>

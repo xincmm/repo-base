@@ -69,7 +69,7 @@ export const StatsCard: React.FC<StatsCardProps> = async ({ repoId }) => {
             ) : (
               <GitBranch className="size-4" />
             )}
-            <span>{repoStats?.name}</span>
+            <span className="truncate">{repoStats?.name}</span>
           </CardTitle>
           {repoStats?.description && (
             <CardDescription>{repoStats.description}</CardDescription>

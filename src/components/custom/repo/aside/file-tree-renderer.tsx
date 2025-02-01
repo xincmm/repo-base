@@ -36,7 +36,7 @@ export const TreeNode: React.FC<{ node: FileTreeNode }> = ({ node }) => {
           <Folder className="size-3" />
         )}
 
-        <span>{node.name}</span>
+        <span className="truncate">{node.name}</span>
       </Button>
 
       {open && node.fileType === "folder" && !!node.children?.length && (
