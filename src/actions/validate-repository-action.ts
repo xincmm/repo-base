@@ -44,8 +44,6 @@ export const validateRepositoryAction = actionClient
       }),
     ]);
 
-    // ghRepo.data.master_branch
-
     const repoName = ghRepo.data.full_name;
     const defaultBranch = ghRepo.data.default_branch;
 

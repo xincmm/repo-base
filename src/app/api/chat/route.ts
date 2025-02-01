@@ -33,13 +33,17 @@ export async function POST(req: NextRequest) {
     threadId = cookieThreadId.value;
   }
 
-  const firstSystemMessage: CoreMessage = {
-    role: "user",
-    content: `Use this as the \`repoId\` parameter: ${repoId}`,
-  };
+  let finalMessages: CoreMessage[];
 
-  const finalMessages =
-    messages.length > 1 ? messages : [firstSystemMessage, ...messages];
+  if (!!messages.length && messages.length > 1) finalMessages = messages;
+  else {
+    finalMessages = [
+      {
+        role: messages[0].role as "user",
+        content: `${messages[0].content as string}\n\nThe repository id is ${repoId}`,
+      },
+    ];
+  }
 
   const result = await chatAgent.stream(finalMessages, {
     threadId,

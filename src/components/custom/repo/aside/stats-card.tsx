@@ -45,20 +45,22 @@ export const StatsCard: React.FC<StatsCardProps> = async ({ repoId }) => {
 
   return (
     <>
-      {fileTreeTask?.runId && fileTreeTask?.taskToken && repoStats?.name && (
-        <ProcessDocumentation
-          taskToken={fileTreeTask.taskToken}
-          runId={fileTreeTask.runId}
-          docsProcessingStatus={repoStats?.docsProcessingStatus}
-          repoId={Number(repoId)}
-          owner={repoStats.name.split("/")[0]}
-          repo={repoStats.name.split("/")[1]}
-        />
-      )}
+      {!!fileTreeTask?.runId &&
+        !!fileTreeTask?.taskToken &&
+        !!repoStats?.name && (
+          <ProcessDocumentation
+            taskToken={fileTreeTask.taskToken}
+            runId={fileTreeTask.runId}
+            docsProcessingStatus={repoStats?.docsProcessingStatus}
+            repoId={Number(repoId)}
+            owner={repoStats.name.split("/")[0]}
+            repo={repoStats.name.split("/")[1]}
+          />
+        )}
       <Card className="bg-sidebar shadow-none border-none">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            {repoStats?.ownerAvatar ? (
+            {!!repoStats?.ownerAvatar ? (
               <Image
                 className="rounded-full border"
                 src={repoStats?.ownerAvatar}
@@ -71,26 +73,32 @@ export const StatsCard: React.FC<StatsCardProps> = async ({ repoId }) => {
             )}
             <span className="truncate">{repoStats?.name}</span>
           </CardTitle>
-          {repoStats?.description && (
+          {!!repoStats?.description && (
             <CardDescription>{repoStats.description}</CardDescription>
           )}
         </CardHeader>
         <CardContent className="divide-y">
           <div className="w-full flex items-center flex-wrap gap-2 pb-4">
-            <Badge className="rounded-full gap-2">
-              <Star className="size-3" />
-              <span>{repoStats?.stars}</span>
-            </Badge>
+            {!!repoStats?.stars && (
+              <Badge className="rounded-full gap-2">
+                <Star className="size-3" />
+                <span>{repoStats.stars}</span>
+              </Badge>
+            )}
 
-            <Badge className="rounded-full gap-2">
-              <GitFork className="size-3" />
-              <span>{repoStats?.forks}</span>
-            </Badge>
+            {!!repoStats?.forks && (
+              <Badge className="rounded-full gap-2">
+                <GitFork className="size-3" />
+                <span>{repoStats.forks}</span>
+              </Badge>
+            )}
 
-            <Badge className="rounded-full gap-2">
-              <Scale className="size-3" />
-              <span>{repoStats?.licenseName}</span>
-            </Badge>
+            {!!repoStats?.licenseName && (
+              <Badge className="rounded-full gap-2">
+                <Scale className="size-3" />
+                <span>{repoStats.licenseName}</span>
+              </Badge>
+            )}
           </div>
           <div className="pt-2">
             <p className="text-sm">Languages</p>

@@ -15,8 +15,3 @@ export const actionClient = createSafeActionClient({
   .use(({ next }) => next({ ctx: { mastra } })) // mastra client
   .use(({ next }) => next({ ctx: { gh } })) // github client
   .use(({ next }) => next({ ctx: { db } })); // drizzle client
-
-/* TODO:
- * Things to add to the action client's context:
- * - Mastra instance
- */

@@ -9,6 +9,16 @@ import { repoTasks } from "@/db/schema/repo-tasks";
 export const docsProcessingStatusAction = actionClient
   .schema(z.object({ repoId: z.number(), repo: z.string(), owner: z.string() }))
   .action(async ({ ctx, parsedInput }) => {
+    const existingDocsProcessingTask = await ctx.db.query.repoTasks.findFirst({
+      where: (f, o) =>
+        o.and(
+          o.eq(f.repoId, parsedInput.repoId),
+          o.eq(f.taskId, "docs-processing-task"),
+        ),
+    });
+
+    if (existingDocsProcessingTask) return;
+
     const triggerResponse = await tasks.trigger(docsProcessingTask.id, {
       ...parsedInput,
     });
