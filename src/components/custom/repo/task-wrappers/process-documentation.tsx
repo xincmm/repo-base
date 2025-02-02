@@ -2,7 +2,7 @@
 
 import { docsProcessingStatusAction } from "@/actions/docs-processing-action";
 import { docsProcessingStatus } from "@/db/schema/repos";
-import { useRealtimeRun } from "@trigger.dev/react-hooks";
+import { useRealtimeBatch } from "@trigger.dev/react-hooks";
 import { useAction } from "next-safe-action/hooks";
 import { useEffect } from "react";
 
@@ -26,17 +26,21 @@ export const ProcessDocumentation: React.FC<ProcessDocumentationProps> = ({
   owner,
   taskToken,
 }) => {
-  const { run } = useRealtimeRun(runId, {
+  const { runs } = useRealtimeBatch(runId, {
     accessToken: taskToken,
   });
 
-  const { execute } = useAction(docsProcessingStatusAction);
+  const { execute } = useAction(docsProcessingStatusAction, {
+    onSuccess: ({ data }) => console.log({ data }),
+  });
+
+  console.log({ runs });
 
   useEffect(() => {
-    if (!docsProcessingStatus && run?.status === "COMPLETED") {
+    if (!docsProcessingStatus && runs.every((r) => r.status === "COMPLETED")) {
       execute({ repo, repoId, owner });
     }
-  }, [docsProcessingStatus, execute, owner, repo, repoId, run?.status]);
+  }, [docsProcessingStatus, execute, owner, repo, repoId, runs]);
 
   return null;
 };

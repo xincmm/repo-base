@@ -17,7 +17,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 interface LeftSidebarInterface {
-  repoId?: string;
+  repoId?: number;
   sessionId: string;
 }
 

@@ -9,7 +9,7 @@ import { GitBranch } from "lucide-react";
 import Link from "next/link";
 
 interface RepoListInterface {
-  repoId?: string;
+  repoId?: number;
   sessionId: string;
 }
 
@@ -34,7 +34,7 @@ export const RepoList: React.FC<RepoListInterface> = async ({
     <SidebarMenu>
       {userSessionRepos.map(({ repo }) => (
         <SidebarMenuItem key={repo?.id}>
-          <SidebarMenuButton isActive={repo?.id === Number(repoId)} asChild>
+          <SidebarMenuButton isActive={repo?.id === repoId} asChild>
             <Link href={`/repo/${repo?.id}?sessionId=${sessionId}`}>
               <GitBranch />
               <span className="truncate">{repo?.name}</span>

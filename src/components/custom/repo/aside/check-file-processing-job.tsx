@@ -1,6 +1,6 @@
 "use client";
 
-import { useRealtimeRun } from "@trigger.dev/react-hooks";
+import { useRealtimeBatch } from "@trigger.dev/react-hooks";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
@@ -16,13 +16,13 @@ export const CheckFileProcessingJob: React.FC<CheckFileProcessingJobProps> = ({
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("sessionId");
 
-  const { run } = useRealtimeRun(runId);
+  const { runs } = useRealtimeBatch(runId);
 
   useEffect(() => {
-    if (run?.output && sessionId) {
+    if (runs.every((r) => !!r.output) && sessionId) {
       router.push(`${pathName}?sessionId=${sessionId}`);
     }
-  }, [pathName, router, run?.output, sessionId]);
+  }, [pathName, router, runs, sessionId]);
 
   return null;
 };

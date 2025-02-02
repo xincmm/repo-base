@@ -11,9 +11,12 @@ export const repoFiles = pgTable("repo_files", {
   path: text(),
   sha: text(),
   url: text(),
-  repoId: integer("repo_id").references(() => repos.id, {
-    onDelete: "cascade",
-  }),
+  repoId: integer("repo_id")
+    .references(() => repos.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
+  content: text(),
   ...timestamps,
 });
 

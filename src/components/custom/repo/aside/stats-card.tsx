@@ -20,6 +20,9 @@ export const StatsCard: React.FC<StatsCardProps> = async ({ repoId }) => {
   const repoStats = await db.query.repos.findFirst({
     where: (t, h) => h.eq(t.id, repoId),
     with: {
+      repoTasks: {
+        where: (f, o) => o.eq(f.taskId, getFileTreeTask.id),
+      },
       repoLanguages: {
         orderBy: (f, o) => o.desc(f.bytes),
         limit: 10,
@@ -38,10 +41,7 @@ export const StatsCard: React.FC<StatsCardProps> = async ({ repoId }) => {
     orderBy: (f, o) => o.desc(f.createdAt),
   });
 
-  const fileTreeTask = await db.query.repoTasks.findFirst({
-    where: (f, o) =>
-      o.and(o.eq(f.taskId, getFileTreeTask.id), o.eq(f.repoId, repoId)),
-  });
+  const fileTreeTask = repoStats?.repoTasks.find(Boolean);
 
   return (
     <>

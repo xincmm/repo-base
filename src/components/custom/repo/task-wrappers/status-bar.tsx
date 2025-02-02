@@ -1,20 +1,20 @@
-import { db } from "@/db";
+"use client";
+
+import { useFetchingFiles } from "../../providers/fetching-files-task-provider";
+import { useMemo } from "react";
 import { TaskPill } from "./task-pill";
 
-interface StatusBarProps {
-  repoId: number;
-}
+export const StatusBar: React.FC = () => {
+  const fileTreeBatch = useFetchingFiles();
 
-export const StatusBar: React.FC<StatusBarProps> = async ({ repoId }) => {
-  const repositoryTasks = await db.query.repoTasks.findMany({
-    where: (f, o) => o.eq(f.repoId, repoId),
-  });
+  const fileTreeTask = useMemo(
+    () => fileTreeBatch?.runs.find((r) => r.taskIdentifier === "get-file-tree"),
+    [fileTreeBatch?.runs],
+  );
 
   return (
-    <div className="flex items-center gap-2 h-8 py-2">
-      {repositoryTasks.map((task) => (
-        <TaskPill key={task.id} task={task} />
-      ))}
+    <div className="flex items-center gap-2 h-8 py-2 overflow-auto">
+      {fileTreeTask && <TaskPill task={fileTreeTask} />}
     </div>
   );
 };

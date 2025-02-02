@@ -4,6 +4,7 @@ import { relations } from "drizzle-orm";
 import { sessionRepos } from "./session-repos";
 import { repoLanguages } from "./repo-languages";
 import { repoFiles } from "./repo-files";
+import { repoTasks } from "./repo-tasks";
 
 export const docsProcessingStatus = pgEnum("docs_processing_status_enum", [
   "not_started",
@@ -32,4 +33,5 @@ export const reposRelations = relations(repos, ({ many }) => ({
   sessionRepos: many(sessionRepos),
   repoLanguages: many(repoLanguages),
   repoFiles: many(repoFiles),
+  repoTasks: many(repoTasks),
 }));

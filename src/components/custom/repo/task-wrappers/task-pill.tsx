@@ -1,18 +1,17 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
-import { repoTasks } from "@/db/schema/repo-tasks";
-import {
+import type {
   useRealtimeRun,
   UseRealtimeRunInstance,
 } from "@trigger.dev/react-hooks";
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
-import { AnyTask } from "@trigger.dev/sdk/v3";
+import type { getFileTreeTask } from "@/trigger/get-file-tree-task";
 
-interface TaskPillProps {
-  task: typeof repoTasks.$inferSelect;
-}
+type TaskPillProps = {
+  task: NonNullable<
+    ReturnType<typeof useRealtimeRun<typeof getFileTreeTask>>["run"]
+  >;
+};
 
 const STATUS_GROUPS = {
   success: ["COMPLETED"],
@@ -68,16 +67,14 @@ const STATUS_DISPLAY = {
 } as const;
 
 export const TaskPill: React.FC<TaskPillProps> = ({ task }) => {
-  const { run } = useRealtimeRun(task.runId, {
-    accessToken: task.taskToken,
-  });
-
   const [statusGroup, setStatusGroup] = useState<keyof typeof STATUS_GROUPS>();
 
   useEffect(() => {
     const getStatusGroup = (
       status:
-        | NonNullable<UseRealtimeRunInstance<AnyTask>["run"]>["status"]
+        | NonNullable<
+            UseRealtimeRunInstance<typeof getFileTreeTask>["run"]
+          >["status"]
         | undefined,
     ) => {
       if (!status) return "inProgress";
@@ -111,22 +108,22 @@ export const TaskPill: React.FC<TaskPillProps> = ({ task }) => {
       return "inProgress";
     };
 
-    setStatusGroup(getStatusGroup(run?.status));
-  }, [run?.status]);
+    setStatusGroup(getStatusGroup(task.status));
+  }, [task]);
 
   const taskConfig = useMemo(
     () =>
-      TASK_CONFIG[task.taskId as keyof typeof TASK_CONFIG] ??
+      TASK_CONFIG[task.taskIdentifier as keyof typeof TASK_CONFIG] ??
       TASK_CONFIG["get-file-tree"],
-    [task.taskId],
+    [task.taskIdentifier],
   );
 
   const statusText = useMemo(
     () =>
-      run?.status
-        ? STATUS_DISPLAY[run.status as keyof typeof STATUS_DISPLAY]
+      statusGroup
+        ? STATUS_DISPLAY[task.status as keyof typeof STATUS_DISPLAY]
         : "Pending",
-    [run?.status],
+    [statusGroup, task.status],
   );
 
   const dotColor = useMemo(
@@ -150,7 +147,6 @@ export const TaskPill: React.FC<TaskPillProps> = ({ task }) => {
 
   return (
     <Badge
-      key={task.id}
       className="rounded-full inline-flex items-center gap-2 bg-background py-1 font-normal shadow-inner text-xs"
       variant="outline"
     >

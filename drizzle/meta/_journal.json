@@ -29,6 +29,20 @@
       "when": 1738172259323,
       "tag": "0003_slim_lyja",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1738406240239,
+      "tag": "0004_sharp_pyro",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1738408548747,
+      "tag": "0005_loving_lilandra",
+      "breakpoints": true
     }
   ]
 }

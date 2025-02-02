@@ -3,6 +3,7 @@ import { documentationProcessingWorkflow } from "./workflows/documentation-proce
 import { PgMemory } from "@mastra/memory";
 import { PgVector } from "@mastra/vector-pg";
 import { chatAgent } from "./agents/chat-agent";
+import { improvedDocsProcessing } from "./workflows/improved-docs-processing";
 
 export const mastra = new Mastra({
   //@ts-expect-error error with logger compatibility
@@ -17,5 +18,6 @@ export const mastra = new Mastra({
   },
   workflows: {
     documentationProcessingWorkflow,
+    improvedDocsProcessing,
   },
 });

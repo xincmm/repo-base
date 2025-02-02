@@ -5,6 +5,9 @@ import { StatsCard } from "@/components/custom/repo/aside/stats-card";
 import { LeftSidebar } from "@/components/custom/repo/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { StatusBar } from "@/components/custom/repo/task-wrappers/status-bar";
+import { Container } from "./container";
+import { MainContainer } from "./aside-container";
+import { FetchingFilesProviderWrapper } from "@/components/custom/providers/fetching-files-provider-wrapper";
 
 export default async function RepoPage({
   params,
@@ -18,26 +21,30 @@ export default async function RepoPage({
   }>;
 }) {
   const { runId, sessionId, triggerToken } = await searchParams;
-  const { repoId } = await params;
+  const { repoId: stringRepoId } = await params;
+  const repoId = Number(stringRepoId);
 
   return (
     <TriggerProvider accessToken={triggerToken}>
-      <SidebarProvider>
-        <LeftSidebar sessionId={sessionId} repoId={repoId} />
-        <div className="flex h-screen w-full">
-          <div className="py-2 bg-sidebar grow space-y-2">
-            <StatusBar repoId={Number(repoId)} />
-            <ChatAreaWrapper repoId={Number(repoId)} />
-          </div>
-          <aside className="w-full max-w-sm p-2 bg-sidebar h-screen flex flex-col gap-2 shrink-0">
-            <header className="text-lg font-semibold">Repository info</header>
-            <hr />
-            <StatsCard repoId={Number(repoId)} />
-            <hr />
-            <FileExplorer runId={runId} repoId={Number(repoId)} />
-          </aside>
-        </div>
-      </SidebarProvider>
+      <FetchingFilesProviderWrapper repoId={repoId}>
+        <SidebarProvider>
+          <LeftSidebar sessionId={sessionId} repoId={repoId} />
+          <Container>
+            <MainContainer>
+              <StatusBar />
+              <ChatAreaWrapper repoId={repoId} />
+            </MainContainer>
+
+            <aside className="p-2 bg-sidebar h-screen flex flex-col gap-2 max-w-sm">
+              <header className="text-lg font-semibold">Repository info</header>
+              <hr />
+              <StatsCard repoId={repoId} />
+              <hr />
+              <FileExplorer runId={runId} repoId={repoId} />
+            </aside>
+          </Container>
+        </SidebarProvider>
+      </FetchingFilesProviderWrapper>
     </TriggerProvider>
   );
 }

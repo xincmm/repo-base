@@ -118,12 +118,16 @@ export const validateRepositoryAction = actionClient
           }),
 
           // trigger background task to get repository files
-          tasks.trigger(getFileTreeTask.id, {
-            repoId: insertedRepo.repoId,
-            owner,
-            repo,
-            defaultBranch,
-          }),
+          tasks.batchTrigger(getFileTreeTask.id, [
+            {
+              payload: {
+                repoId: insertedRepo.repoId,
+                owner,
+                repo,
+                defaultBranch,
+              },
+            },
+          ]),
         ]);
 
         await tx
@@ -131,13 +135,13 @@ export const validateRepositoryAction = actionClient
           .values({
             repoId: insertedRepo.repoId,
             taskId: getFileTreeTask.id,
-            runId: handle.id,
+            runId: handle.batchId,
             taskToken: handle.publicAccessToken,
           })
           .returning();
 
         utilStore.repoId = insertedRepo.repoId;
-        utilStore.runId = handle.id;
+        utilStore.runId = handle.batchId;
         utilStore.triggerToken = handle.publicAccessToken;
       });
 
