@@ -5,9 +5,11 @@ import { PgVector } from "@mastra/vector-pg";
 import { chatAgent } from "./agents/chat-agent";
 import { improvedDocsProcessing } from "./workflows/improved-docs-processing";
 
+export const pgVector = new PgVector(process.env.DATABASE_URL!);
+
 export const mastra = new Mastra({
   //@ts-expect-error error with logger compatibility
-  vectors: { pgVector: new PgVector(process.env.DATABASE_URL!) },
+  vectors: { pgVector },
   //@ts-expect-error error with logger compatibility
   memory: new PgMemory({ connectionString: process.env.DATABASE_URL! }),
   logger: new Logger({

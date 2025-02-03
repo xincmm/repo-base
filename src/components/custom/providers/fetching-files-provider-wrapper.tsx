@@ -15,8 +15,8 @@ export const FetchingFilesProviderWrapper: React.FC<
 
   return (
     <FetchingFilesTaskProvider
-      batchId={fileTreeTask.runId}
-      accessToken={fileTreeTask.taskToken}
+      batchId={fileTreeTask?.runId}
+      accessToken={fileTreeTask?.taskToken}
     >
       {children}
     </FetchingFilesTaskProvider>

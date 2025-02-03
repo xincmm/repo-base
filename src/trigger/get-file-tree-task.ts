@@ -24,7 +24,7 @@ export const getFileTreeTask = schemaTask({
       const fileInserts = tree.data.tree.map((file) => ({
         repoId: p.repoId,
         url: file.url,
-        path: file.path,
+        path: file.path ?? "",
         sha: file.sha,
         fileType:
           file.type === "blob"

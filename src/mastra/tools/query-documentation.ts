@@ -21,8 +21,9 @@ export const queryDocumentation = createTool({
     if (!vector) throw new Error("pgVector instance wasn't found");
 
     const queryVector = await embed(query, {
-      model: "text-embedding-3-small",
-      provider: "OPEN_AI",
+      apiKey: process.env.COHERE_API_KEY!,
+      model: "embed-english-v3.0",
+      provider: "COHERE",
       maxRetries: 3,
     });
 

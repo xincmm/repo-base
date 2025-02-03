@@ -34,9 +34,8 @@ export const ProcessDocumentation: React.FC<ProcessDocumentationProps> = ({
     onSuccess: ({ data }) => console.log({ data }),
   });
 
-  console.log({ runs });
-
   useEffect(() => {
+    console.log({ runs });
     if (!docsProcessingStatus && runs.every((r) => r.status === "COMPLETED")) {
       execute({ repo, repoId, owner });
     }

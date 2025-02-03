@@ -1,5 +1,10 @@
 # TODO
 
+## 2025-02-02 18:08
+
+- [ ] If there are files in the repo already, manually show the pill on the status bar as completed
+  - the public access key we store on the db expires after some time
+
 ## 2025-02-01 13:07
 
 - What really needs to go to trigger.dev?

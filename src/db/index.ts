@@ -6,6 +6,7 @@ import { sessionRepos, sessionReposRelations } from "./schema/session-repos";
 import { repoLanguages, repoLanguagesRelations } from "./schema/repo-languages";
 import { repoFiles, repoFilesRelations } from "./schema/repo-files";
 import { repoTasks, repoTasksRelations } from "./schema/repo-tasks";
+import { batchHandles, batchHandlesRelations } from "./schema/batch-handles";
 
 export const db = drizzle({
   connection: process.env.DATABASE_URL!,
@@ -22,5 +23,7 @@ export const db = drizzle({
     repoFilesRelations,
     repoTasks,
     repoTasksRelations,
+    batchHandles,
+    batchHandlesRelations,
   },
 });

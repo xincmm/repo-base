@@ -4,10 +4,10 @@ import { FileExplorer } from "@/components/custom/repo/aside/file-explorer";
 import { StatsCard } from "@/components/custom/repo/aside/stats-card";
 import { LeftSidebar } from "@/components/custom/repo/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { StatusBar } from "@/components/custom/repo/task-wrappers/status-bar";
 import { Container } from "./container";
 import { MainContainer } from "./aside-container";
 import { FetchingFilesProviderWrapper } from "@/components/custom/providers/fetching-files-provider-wrapper";
+import { StatusBarWrapper } from "@/components/custom/repo/task-wrappers/status-bar-wrapper";
 
 export default async function RepoPage({
   params,
@@ -31,11 +31,11 @@ export default async function RepoPage({
           <LeftSidebar sessionId={sessionId} repoId={repoId} />
           <Container>
             <MainContainer>
-              <StatusBar />
+              <StatusBarWrapper repoId={repoId} />
               <ChatAreaWrapper repoId={repoId} />
             </MainContainer>
 
-            <aside className="p-2 bg-sidebar h-screen flex flex-col gap-2 max-w-sm">
+            <aside className="p-2 bg-sidebar h-screen flex flex-col gap-2 w-full max-w-sm">
               <header className="text-lg font-semibold">Repository info</header>
               <hr />
               <StatsCard repoId={repoId} />

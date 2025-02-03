@@ -6,4 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const gh = new Octokit();
+export const gh = new Octokit({
+  auth: process.env.GITHUB_TOKEN!,
+});
