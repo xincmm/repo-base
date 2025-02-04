@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
   }
 
   const result = await chatAgent.stream(messages, {
+    maxSteps: 20,
     context: [
       {
         role: "system",

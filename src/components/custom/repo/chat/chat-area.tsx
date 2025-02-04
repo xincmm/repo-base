@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { SendHorizontal } from "lucide-react";
+import { RefreshCw, SendHorizontal, StopCircle } from "lucide-react";
 import { type Message, useChat } from "ai/react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -18,14 +18,19 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   initialMessages,
   repoId,
 }) => {
-  const { messages, handleSubmit, input, handleInputChange } = useChat({
+  const {
+    messages,
+    handleSubmit,
+    input,
+    handleInputChange,
+    isLoading,
+    stop,
+    reload,
+  } = useChat({
     id: String(repoId),
     api: `/api/chat?repoId=${repoId}`,
     initialMessages: initialMessages,
-    onError: (error) =>
-      toast.error(error.message, {
-        description: error.message + " " + error.cause,
-      }),
+    onError: (error) => toast.error(error.message),
   });
 
   const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -84,6 +89,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
       </ScrollArea>
       <form className="relative" action={() => handleSubmit()}>
         <Textarea
+          disabled={isLoading}
           autoFocus
           ref={textareaRef}
           value={input}
@@ -91,10 +97,26 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
           onKeyDown={handleEnter}
           placeholder="Write something"
           className="bg-sidebar border focus-visible:ring-ring/30 pr-8 shadow-lg max-h-80"
+          style={{
+            width: "var(--limit-width)",
+          }}
         />
-        <Button size="xs" className="absolute bottom-2 right-2" type="submit">
-          <SendHorizontal className="-rotate-90 size-4" />
-        </Button>
+        <div className="absolute bottom-3 right-6 flex gap-2">
+          {!isLoading ? (
+            <>
+              <Button size="xs" type="button" onClick={() => reload()}>
+                <RefreshCw className="-rotate-90 size-4" />
+              </Button>
+              <Button size="xs" type="submit">
+                <SendHorizontal className="-rotate-90 size-4" />
+              </Button>
+            </>
+          ) : (
+            <Button size="xs" type="button" onClick={() => stop()}>
+              <StopCircle className="-rotate-90 size-4" />
+            </Button>
+          )}
+        </div>
       </form>
     </main>
   );

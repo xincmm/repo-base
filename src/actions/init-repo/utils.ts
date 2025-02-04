@@ -1,5 +1,4 @@
 import { db } from "@/db";
-import { repoFiles } from "@/db/schema/repo-files";
 import { gh } from "@/lib/utils";
 import { z } from "zod";
 

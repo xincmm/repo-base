@@ -42,8 +42,8 @@ export default function RootLayout({
           <div className="absolute bottom-4 right-4">
             <ThemeSwitcher />
           </div>
+          <Toaster richColors />
         </ThemeProvider>
-        <Toaster richColors />
       </body>
     </html>
   );
