@@ -7,7 +7,7 @@ export const fileType = pgEnum("file_type", ["folder", "file"]);
 
 export const repoFiles = pgTable("repo_files", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  fileType: fileType("file_type"),
+  fileType: fileType("file_type").notNull(),
   path: text().notNull(),
   sha: text(),
   url: text(),

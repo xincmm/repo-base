@@ -27,11 +27,7 @@ export const getFileTreeTask = schemaTask({
         path: file.path ?? "",
         sha: file.sha,
         fileType:
-          file.type === "blob"
-            ? ("file" as const)
-            : file.type === "tree"
-              ? ("folder" as const)
-              : null,
+          file.type === "blob" ? ("file" as const) : ("folder" as const),
       }));
 
       await db.insert(repoFiles).values(fileInserts);

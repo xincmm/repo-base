@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { SendHorizontal } from "lucide-react";
 import { type Message, useChat } from "ai/react";
-import { useEffect, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageViewer } from "./message";
+import { toast } from "sonner";
 
 interface ChatAreaProps {
   repoId: number;
@@ -21,6 +22,10 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
     id: String(repoId),
     api: `/api/chat?repoId=${repoId}`,
     initialMessages: initialMessages,
+    onError: (error) =>
+      toast.error(error.message, {
+        description: error.message + " " + error.cause,
+      }),
   });
 
   const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -34,6 +39,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [messagesHeight, setMessagesHeight] = useState("auto");
+  const [limitWidth, setLimitWidth] = useState("auto");
 
   useEffect(() => {
     const container = containerRef.current;
@@ -46,6 +52,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
       const textareaRect = textarea.getBoundingClientRect();
       const availableHeight = containerRect.height - (textareaRect.height + 48);
       setMessagesHeight(`${availableHeight}px`);
+      setLimitWidth(`${containerRect.width - 32}px`);
     };
 
     const observer = new ResizeObserver(calculateHeights);
@@ -64,9 +71,10 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   return (
     <main
       ref={containerRef}
-      className="bg-background rounded-xl h-[calc(100vh-32px-16px)] overflow-hidden p-4 border space-y-2 flex flex-col gap-2"
+      className="bg-background rounded-xl h-[calc(100vh-32px-16px)] overflow-hidden p-4 pr-0 border space-y-2 flex flex-col gap-2 w-full"
+      style={{ "--limit-width": `${limitWidth}` } as CSSProperties}
     >
-      <ScrollArea style={{ height: messagesHeight }} className="pr-3">
+      <ScrollArea style={{ height: messagesHeight }} className="">
         <div className="space-y-2">
           {messages.map((m) => (
             <MessageViewer key={m.id} message={m} />

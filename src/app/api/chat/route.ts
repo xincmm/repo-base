@@ -3,8 +3,6 @@ import type { NextRequest } from "next/server";
 import type { CoreMessage } from "@mastra/core";
 import { cookies } from "next/headers";
 
-export const maxDuration = 60;
-
 export async function POST(req: NextRequest) {
   if (!mastra?.memory) throw new Error("Mastra memory not available");
 
@@ -16,7 +14,8 @@ export async function POST(req: NextRequest) {
 
   const { messages } = (await req.json()) as { messages: CoreMessage[] };
 
-  const chatAgent = mastra.getAgent("chatAgent");
+  // const chatAgent = mastra.getAgent("chatAgent");
+  const chatAgent = mastra.getAgent("repoExplorer");
 
   let threadId: string;
 
@@ -33,19 +32,13 @@ export async function POST(req: NextRequest) {
     threadId = cookieThreadId.value;
   }
 
-  let finalMessages: CoreMessage[];
-
-  if (!!messages.length && messages.length > 1) finalMessages = messages;
-  else {
-    finalMessages = [
+  const result = await chatAgent.stream(messages, {
+    context: [
       {
-        role: messages[0].role as "user",
-        content: `${messages[0].content as string}\n\nThe repository id is ${repoId}`,
+        role: "system",
+        content: `Use this as the repository id: ${repoId}`,
       },
-    ];
-  }
-
-  const result = await chatAgent.stream(finalMessages, {
+    ],
     threadId,
     resourceid: String(repoId),
   });

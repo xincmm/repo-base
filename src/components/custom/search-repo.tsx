@@ -27,6 +27,7 @@ export const SearchRepo: React.FC = () => {
       action={() => execute({ repository, sessionId })}
     >
       <Input
+        autoFocus
         value={repository}
         onChange={(e) => setRepository(e.target.value)}
         placeholder="facebook/react"

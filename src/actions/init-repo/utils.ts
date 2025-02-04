@@ -1,4 +1,5 @@
 import { db } from "@/db";
+import { repoFiles } from "@/db/schema/repo-files";
 import { gh } from "@/lib/utils";
 import { z } from "zod";
 
@@ -61,4 +62,35 @@ export const fetchRepoAndRepoLangs = async ({
     gh.rest.repos.get({ repo, owner }),
     gh.rest.repos.listLanguages({ repo, owner }),
   ]);
+};
+
+export const fetchFilesFromGithub = async ({
+  owner,
+  repo,
+  repoId,
+  defaultBranch,
+}: {
+  owner: string;
+  repo: string;
+  repoId: number;
+  defaultBranch: string;
+}) => {
+  const tree = await gh.rest.git.getTree({
+    owner,
+    repo,
+    tree_sha: defaultBranch,
+    recursive: "true",
+  });
+
+  const fileInserts = tree.data.tree.map((file) => ({
+    repoId,
+    url: file.url,
+    path: file.path ?? "",
+    sha: file.sha,
+    fileType: file.type === "blob" ? ("file" as const) : ("folder" as const),
+  }));
+
+  console.dir(fileInserts, { depth: Infinity });
+
+  return fileInserts;
 };

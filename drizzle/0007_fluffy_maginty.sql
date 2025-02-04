@@ -1,0 +1,1 @@
+ALTER TABLE "repo_files" ALTER COLUMN "file_type" SET NOT NULL;

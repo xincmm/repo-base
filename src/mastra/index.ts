@@ -1,9 +1,9 @@
 import { Logger, Mastra } from "@mastra/core";
-import { documentationProcessingWorkflow } from "./workflows/documentation-processing";
 import { PgMemory } from "@mastra/memory";
 import { PgVector } from "@mastra/vector-pg";
 import { chatAgent } from "./agents/chat-agent";
 import { improvedDocsProcessing } from "./workflows/improved-docs-processing";
+import { repoExplorer } from "./agents/repo-explorer";
 
 export const pgVector = new PgVector(process.env.DATABASE_URL!);
 
@@ -17,9 +17,9 @@ export const mastra = new Mastra({
   }),
   agents: {
     chatAgent,
+    repoExplorer,
   },
   workflows: {
-    documentationProcessingWorkflow,
     improvedDocsProcessing,
   },
 });
