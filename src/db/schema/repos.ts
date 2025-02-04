@@ -24,6 +24,7 @@ export const repos = pgTable("repos", {
 
   licenseName: text(),
   licenseUrl: text(),
+
   ...timestamps,
 
   docsProcessingStatus: docsProcessingStatus("docs_processing_status"),

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeSwitcher } from "@/components/custom/theme-switcher";
 import { SessionProvider } from "@/components/custom/providers/sesssion-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +43,7 @@ export default function RootLayout({
             <ThemeSwitcher />
           </div>
         </ThemeProvider>
+        <Toaster richColors />
       </body>
     </html>
   );

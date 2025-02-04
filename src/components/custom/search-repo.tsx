@@ -3,31 +3,43 @@
 import { useAction } from "next-safe-action/hooks";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { validateRepositoryAction } from "@/actions/validate-repository-action";
+import { initRepoAction } from "@/actions/init-repo";
 import { useState } from "react";
 import { useSession } from "./providers/sesssion-provider";
+import { LoaderCircle } from "lucide-react";
+import { toast } from "sonner";
 
 export const SearchRepo: React.FC = () => {
   const [repository, setRepository] = useState("");
   const sessionId = useSession();
 
-  const { execute, isPending } = useAction(validateRepositoryAction, {
-    onSuccess: ({ data }) => console.log({ data }),
-    onError: ({ error }) => console.error({ error }),
+  const { execute, isPending } = useAction(initRepoAction, {
+    onError: ({ error }) => {
+      if (error.serverError) {
+        toast.error(error.serverError ?? "Unkown server error");
+      }
+    },
   });
 
   return (
-    <form className="flex gap-2">
+    <form
+      className="flex gap-2"
+      action={() => execute({ repository, sessionId })}
+    >
       <Input
         value={repository}
         onChange={(e) => setRepository(e.target.value)}
         placeholder="facebook/react"
       />
-      <Button
-        disabled={isPending}
-        onClick={() => execute({ repository, sessionId })}
-      >
-        {isPending ? "Analyzing repository" : "Analyze Repository"}
+      <Button className="w-60" disabled={isPending} type="submit">
+        {isPending ? (
+          <>
+            <LoaderCircle className="animate-spin" />
+            <span>Importing repository</span>
+          </>
+        ) : (
+          <span>Import repository</span>
+        )}
       </Button>
     </form>
   );

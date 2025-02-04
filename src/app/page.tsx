@@ -1,6 +1,13 @@
+import { HomeRepoList } from "@/components/custom/repo-list";
 import { SearchRepo } from "@/components/custom/search-repo";
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ sessionId: string }>;
+}) {
+  const { sessionId } = await searchParams;
+
   return (
     <main>
       <div className="container mx-auto flex flex-col items-center justify-center gap-12 min-h-screen">
@@ -14,6 +21,7 @@ export default function Home() {
         <div className="w-full max-w-xl">
           <SearchRepo />
         </div>
+        <HomeRepoList sessionId={sessionId} />
       </div>
     </main>
   );
