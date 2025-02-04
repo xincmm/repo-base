@@ -60,6 +60,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-syntax-highlighter": "^15.5.13",
+    "babel-plugin-react-compiler": "19.0.0-beta-714736e-20250131",
     "canvas": "^3.1.0",
     "drizzle-kit": "^0.30.2",
     "eslint": "^9",
