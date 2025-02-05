@@ -1,6 +1,8 @@
 import { Agent } from "@mastra/core";
 import { getRepoFiles } from "../tools/get-repo-files";
 import { fetchFileContent } from "../tools/fetch-file-content";
+import { getRepoPullRequests } from "../tools/get-repo-pull-requests";
+import { getRepoIssues } from "../tools/get-repo-issues";
 
 export const repoExplorer = new Agent({
   name: "repoExplorer",
@@ -12,7 +14,9 @@ export const repoExplorer = new Agent({
   },
   tools: {
     fetchFileContent,
+    getRepoIssues,
     getRepoFiles,
+    getRepoPullRequests,
   },
   instructions: `
 ## Role

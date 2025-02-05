@@ -89,7 +89,5 @@ export const fetchFilesFromGithub = async ({
     fileType: file.type === "blob" ? ("file" as const) : ("folder" as const),
   }));
 
-  console.dir(fileInserts, { depth: Infinity });
-
   return fileInserts;
 };

@@ -5,10 +5,6 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ hostname: "avatars.githubusercontent.com" }],
   },
-  experimental: {
-    reactCompiler: true,
-  },
-  serverExternalPackages: ["@llamaindex/env"],
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,

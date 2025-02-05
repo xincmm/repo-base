@@ -3,7 +3,7 @@ import { MastraAvatar, UserAvatar } from "./avatars";
 import { cn } from "@/lib/utils";
 import { Markdown } from "./markdown";
 import { CheckCircle, LoaderCircle } from "lucide-react";
-// import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface MessageViewerProps {
   message: Message;
@@ -46,19 +46,19 @@ export const MessageViewer: React.FC<MessageViewerProps> = ({ message }) => {
               )}
             </div>
 
-            {/* {toolInvocation.args && ( */}
-            {/*   <ScrollArea className="bg-background p-2 rounded-lg border shadow-md w-[calc(var(--limit-width)-32px)]"> */}
-            {/*     <code>{JSON.stringify(toolInvocation.args, null, 2)}</code> */}
-            {/*   </ScrollArea> */}
-            {/* )} */}
-            {/**/}
-            {/* {toolInvocation.state === "result" && ( */}
-            {/*   <ScrollArea className="h-40 bg-background p-2 rounded-lg border shadow-md w-[calc(var(--limit-width)-32px)]"> */}
-            {/*     <pre className=""> */}
-            {/*       <code>{JSON.stringify(toolInvocation.result, null, 2)}</code> */}
-            {/*     </pre> */}
-            {/*   </ScrollArea> */}
-            {/* )} */}
+            {toolInvocation.args && (
+              <ScrollArea className="bg-background p-2 rounded-lg border shadow-md w-[calc(var(--limit-width)-32px)]">
+                <code>{JSON.stringify(toolInvocation.args, null, 2)}</code>
+              </ScrollArea>
+            )}
+
+            {toolInvocation.state === "result" && (
+              <ScrollArea className="h-40 bg-background p-2 rounded-lg border shadow-md w-[calc(var(--limit-width)-32px)]">
+                <pre className="">
+                  <code>{JSON.stringify(toolInvocation.result, null, 2)}</code>
+                </pre>
+              </ScrollArea>
+            )}
           </div>
         ))}
       </div>
