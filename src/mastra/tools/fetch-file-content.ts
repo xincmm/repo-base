@@ -20,6 +20,9 @@ const outputSchema = z.object({
     .describe("The encoding used for the file content from GitHub"),
 });
 
+/**
+ * Fetch file content from GitHub, decode it, and update the database
+ */
 export const fetchFileContent = createTool({
   id: "fetchFileContent",
   description:

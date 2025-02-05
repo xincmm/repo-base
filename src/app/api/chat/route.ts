@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
       {
         role: "system",
         content: `
-Use this as the repository details: ${repository}.
+Use this as the repository details: ${JSON.stringify(repository)}.
 Don't mention the repository ID back to the user since it's an internal implementation detail.
 Don't mention the name of the tools to the user.
 `,

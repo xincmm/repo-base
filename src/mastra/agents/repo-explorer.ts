@@ -3,6 +3,7 @@ import { getRepoFiles } from "../tools/get-repo-files";
 import { fetchFileContent } from "../tools/fetch-file-content";
 import { getRepoPullRequests } from "../tools/get-repo-pull-requests";
 import { getRepoIssues } from "../tools/get-repo-issues";
+import { getRepoCommits } from "../tools/get-repo-commits";
 
 export const repoExplorer = new Agent({
   name: "repoExplorer",
@@ -14,6 +15,7 @@ export const repoExplorer = new Agent({
   },
   tools: {
     fetchFileContent,
+    getRepoCommits,
     getRepoIssues,
     getRepoFiles,
     getRepoPullRequests,
