@@ -13,6 +13,15 @@ export async function POST(req: NextRequest) {
 
   const { messages } = (await req.json()) as { messages: CoreMessage[] };
 
+  const repository = await db.query.repos.findFirst({
+    where: (f, o) => o.eq(f.id, Number(repoId)),
+    columns: {
+      id: true,
+      name: true,
+      description: true,
+    },
+  });
+
   // const chatAgent = mastra.getAgent("chatAgent");
   const chatAgent = mastra.getAgent("repoExplorer");
 
@@ -22,7 +31,10 @@ export async function POST(req: NextRequest) {
     if (!mastra?.memory) throw new Error("Mastra memory not available");
 
     const newThreadId = (
-      await mastra.memory.createThread({ resourceid: String(repoId) })
+      await mastra.memory.createThread({
+        resourceId: String(repoId),
+        title: "",
+      })
     ).id;
 
     if (!newThreadId) throw new Error("Could not create a new thread");
@@ -33,30 +45,30 @@ export async function POST(req: NextRequest) {
     threadId = cookieThreadId.value;
   }
 
-  const repository = await db.query.repos.findFirst({
-    where: (f, o) => o.eq(f.id, Number(repoId)),
-    columns: {
-      id: true,
-      name: true,
-      description: true,
-    },
-  });
-
-  const result = await chatAgent.stream(messages, {
-    maxSteps: 20,
-    context: [
+  const result = await chatAgent.stream(
+    [
       {
-        role: "system",
-        content: `
+        role: "user",
+        content: "My name is Akuya, say Hi Akuya first before replying",
+      },
+      ...messages,
+    ],
+    {
+      maxSteps: 20,
+      context: [
+        {
+          role: "system",
+          content: `
 Use this as the repository details: ${JSON.stringify(repository)}.
 Don't mention the repository ID back to the user since it's an internal implementation detail.
 Don't mention the name of the tools to the user.
 `,
-      },
-    ],
-    threadId,
-    resourceid: String(repoId),
-  });
+        },
+      ],
+      threadId,
+      resourceId: String(repoId),
+    },
+  );
 
   return result.toDataStreamResponse();
 }

@@ -13,7 +13,7 @@ export const ChatAreaWrapper: React.FC<ChatAreaWrapperProps> = async ({
   const cookieThreadId = cookieStore.get(`threadId:${repoId}`);
 
   const initialMessages = cookieThreadId
-    ? (await mastra.memory?.getMessages({ threadId: cookieThreadId.value }))
+    ? (await mastra.memory?.query({ threadId: cookieThreadId.value }))
         ?.uiMessages
     : undefined;
 

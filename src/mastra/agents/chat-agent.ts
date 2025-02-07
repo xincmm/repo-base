@@ -1,4 +1,4 @@
-import { Agent } from "@mastra/core";
+import { Agent } from "@mastra/core/agent";
 import { queryDocumentation } from "../tools/query-documentation";
 
 export const chatAgent = new Agent({

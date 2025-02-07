@@ -1,4 +1,4 @@
-import { Agent } from "@mastra/core";
+import { Agent } from "@mastra/core/agent";
 import { getRepoFiles } from "../tools/get-repo-files";
 import { fetchFileContent } from "../tools/fetch-file-content";
 import { getRepoPullRequests } from "../tools/get-repo-pull-requests";

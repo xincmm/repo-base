@@ -1,0 +1,146 @@
+
+> repo-base@0.1.0 dev /Users/akuyaekorot/Developer/mastra/repo-base
+> next dev --turbopack
+
+   ▲ Next.js 15.1.5 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.102:3000
+   - Environments: .env.development, .env
+
+ ✓ Starting...
+ ✓ Ready in 631ms
+ ⚠ Webpack is configured while Turbopack is not, which may cause problems.
+ ⚠ See instructions if you need to configure Turbopack:
+  https://nextjs.org/docs/app/api-reference/next-config-js/turbo
+
+ ○ Compiling /repo/[repoId] ...
+ ✓ Compiled /repo/[repoId] in 7.3s
+(node:35819) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[34mDEBUG[39m [2025-02-07 01:13:47.341 +0300] (app): [36mLogger updated for AGENT:chatAgent[39m
+[34mDEBUG[39m [2025-02-07 01:13:47.342 +0300] (app): [36mLogger updated for AGENT:repoExplorer[39m
+[34mDEBUG[39m [2025-02-07 01:13:47.343 +0300] (app): [36mLogger updated for MEMORY:Memory[39m
+(node:35826) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[34mDEBUG[39m [2025-02-07 01:13:48.290 +0300] (app): [36mLogger updated for AGENT:chatAgent[39m
+[34mDEBUG[39m [2025-02-07 01:13:48.293 +0300] (app): [36mLogger updated for AGENT:repoExplorer[39m
+[34mDEBUG[39m [2025-02-07 01:13:48.293 +0300] (app): [36mLogger updated for MEMORY:Memory[39m
+[32mINFO[39m [2025-02-07 01:13:48.466 +0300] (app): [36mMemory query() with:[39m
+    threadId: "a81b0452-f16f-4e5e-8095-34618d5ca739"
+ GET /repo/114?sessionId=0290163c-46f7-40d0-ad38-40a1347b4b40 200 in 9516ms
+ACTION: 3ms
+ POST /repo/114?sessionId=0290163c-46f7-40d0-ad38-40a1347b4b40 200 in 43ms
+(node:35827) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[34mDEBUG[39m [2025-02-07 01:13:49.620 +0300] (app): [36mLogger updated for AGENT:chatAgent[39m
+[34mDEBUG[39m [2025-02-07 01:13:49.622 +0300] (app): [36mLogger updated for AGENT:repoExplorer[39m
+[34mDEBUG[39m [2025-02-07 01:13:49.622 +0300] (app): [36mLogger updated for MEMORY:Memory[39m
+ ○ Compiling /api/chat ...
+ ✓ Compiled /api/chat in 3.4s
+llamaindex was already imported. This breaks constructor checks and will lead to issues!
+WARNING: Creating a duplicate database object for the same connection.
+    at new PostgresStore (/Users/akuyaekorot/Developer/mastra/repo-base/.next/server/chunks/node_modules__pnpm_eace6c._.js:9855:24)
+
+[34mDEBUG[39m [2025-02-07 01:14:31.604 +0300] (app): [36mLogger updated for AGENT:chatAgent[39m
+[34mDEBUG[39m [2025-02-07 01:14:31.606 +0300] (app): [36mLogger updated for AGENT:repoExplorer[39m
+[34mDEBUG[39m [2025-02-07 01:14:31.606 +0300] (app): [36mLogger updated for MEMORY:Memory[39m
+[34mDEBUG[39m [2025-02-07 01:14:31.640 +0300] (app): [36m[Agents:repoExplorer] - Starting generation[39m
+    runId: "6d862f94-2927-44eb-ae23-c8cd6fe579ff"
+[34mDEBUG[39m [2025-02-07 01:14:31.641 +0300] (app): [36m[Agent:repoExplorer] - Memory persistence enabled: store=Memory, resourceId=114[39m
+    runId: "6d862f94-2927-44eb-ae23-c8cd6fe579ff"
+    resourceId: "114"
+    threadId: "a81b0452-f16f-4e5e-8095-34618d5ca739"
+    memoryStore: "Memory"
+[32mINFO[39m [2025-02-07 01:14:31.641 +0300] (app):
+    msg: {
+      "type": "AGENT",
+      "message": "Saving user messages in memory for agent repoExplorer",
+      "destinationPath": "AGENT/repoExplorer",
+      "runId": "6d862f94-2927-44eb-ae23-c8cd6fe579ff"
+    }
+[34mDEBUG[39m [2025-02-07 01:14:33.855 +0300] (app):
+    msg: {
+      "type": "AGENT",
+      "message": "No context found: No object generated: response did not match schema.",
+      "destinationPath": "AGENT/repoExplorer"
+    }
+[32mINFO[39m [2025-02-07 01:14:33.856 +0300] (app): [36mMemory query() with:[39m
+    threadId: "a81b0452-f16f-4e5e-8095-34618d5ca739"
+    selectBy: {
+      "last": 40
+    }
+[32mINFO[39m [2025-02-07 01:14:33.863 +0300] (app): [36mRemembered message history includes 14 messages.[39m
+[34mDEBUG[39m [2025-02-07 01:14:33.875 +0300] (app):
+    msg: {
+      "type": "AGENT",
+      "message": "Saved messages to memory",
+      "destinationPath": "AGENT/repoExplorer",
+      "threadId": "a81b0452-f16f-4e5e-8095-34618d5ca739"
+    }
+[34mDEBUG[39m [2025-02-07 01:14:33.886 +0300] (app): [36m[Agent:repoExplorer] - Enhancing tools: memory and resourceId available[39m
+    runId: "6d862f94-2927-44eb-ae23-c8cd6fe579ff"
+    hasMemory: true
+    hasResourceId: true
+    hasEngine: false
+[34mDEBUG[39m [2025-02-07 01:14:33.886 +0300] (app): [36m[Agents:repoExplorer] - Assigning tools[39m
+    runId: "6d862f94-2927-44eb-ae23-c8cd6fe579ff"
+[34mDEBUG[39m [2025-02-07 01:14:33.886 +0300] (app): [36mStarting agent repoExplorer llm stream call[39m
+[34mDEBUG[39m [2025-02-07 01:14:36.640 +0300] (fetchFileContent): [36m[Agent:repoExplorer] - Executing tool fetchFileContent[39m
+    description: "Fetch file content from GitHub, decode it, and update the database"
+    args: {
+      "repoId": 114,
+      "path": "LICENSE"
+    }
+[34mDEBUG[39m [2025-02-07 01:14:41.316 +0300] (app): [36m[Agent:repoExplorer] - Post processing LLM response[39m
+    runId: "6d862f94-2927-44eb-ae23-c8cd6fe579ff"
+    result: {
+      "text": "Let me check the LICENSE file to provide you with the exact license information.\n\nThe project is licensed under the Elastic License 2.0 (ELv2). This is a source-available license that allows you to:\n- Use, copy, distribute, and make derivative works of the software\n- Access and modify the source code\n\nHowever, there are some key limitations:\n1. You cannot provide the software as a hosted or managed service to third parties\n2. You cannot modify or circumvent the license key functionality\n3. You must maintain all licensing and copyright notices\n4. Any modifications must be clearly marked as such\n\nThe license is designed to protect commercial interests while still allowing for open source collaboration and usage. It's important to note that this is not a traditional open-source license, but rather a source-available license with specific commercial restrictions.",
+      "toolResults": [],
+      "toolCalls": [],
+      "usage": {
+        "promptTokens": 14025,
+        "completionTokens": 255,
+        "totalTokens": 14280
+      },
+      "steps": [
+        {
+          "stepType": "initial",
+          "text": "Let me check the LICENSE file to provide you with the exact license information.\n\nThe project is licensed under the Elastic License 2.0 (ELv2). This is a source-available license that allows you to:\n- Use, copy, distribute, and make derivative works of the software\n- Access and modify the source code\n\nHowever, there are some key limitations:\n1. You cannot provide the software as a hosted or managed service to third parties\n2. You cannot modify or circumvent the license key functionality\n3. You must maintain all licensing and copyright notices\n4. Any modifications must be clearly marked as such\n\nThe license is designed to protect commercial interests while still allowing for open source collaboration and usage. It's important to note that this is not a traditional open-source license, but rather a source-available license with specific commercial restrictions.",
+          "toolResults": [],
+          "toolCalls": [],
+          "usage": {
+            "promptTokens": 14025,
+            "completionTokens": 255,
+            "totalTokens": 14280
+          }
+        },
+        {
+          "stepType": "tool-result",
+          "text": "Let me check the LICENSE file to provide you with the exact license information.\n\nThe project is licensed under the Elastic License 2.0 (ELv2). This is a source-available license that allows you to:\n- Use, copy, distribute, and make derivative works of the software\n- Access and modify the source code\n\nHowever, there are some key limitations:\n1. You cannot provide the software as a hosted or managed service to third parties\n2. You cannot modify or circumvent the license key functionality\n3. You must maintain all licensing and copyright notices\n4. Any modifications must be clearly marked as such\n\nThe license is designed to protect commercial interests while still allowing for open source collaboration and usage. It's important to note that this is not a traditional open-source license, but rather a source-available license with specific commercial restrictions.",
+          "toolResults": [],
+          "toolCalls": [],
+          "usage": {
+            "promptTokens": 14025,
+            "completionTokens": 255,
+            "totalTokens": 14280
+          }
+        }
+      ]
+    }
+    threadId: "a81b0452-f16f-4e5e-8095-34618d5ca739"
+ POST /api/chat?repoId=114 200 in 13758ms
+[34mDEBUG[39m [2025-02-07 01:14:41.319 +0300] (app): [36m[Agent:repoExplorer] - Memory persistence: store=Memory threadId=a81b0452-f16f-4e5e-8095-34618d5ca739[39m
+    runId: "6d862f94-2927-44eb-ae23-c8cd6fe579ff"
+    resourceId: "114"
+    threadId: "a81b0452-f16f-4e5e-8095-34618d5ca739"
+    memoryStore: "Memory"
+[32mINFO[39m [2025-02-07 01:14:54.798 +0300] (app): [36mMemory query() with:[39m
+    threadId: "a81b0452-f16f-4e5e-8095-34618d5ca739"
+ GET /repo/114?sessionId=0290163c-46f7-40d0-ad38-40a1347b4b40 200 in 179ms
+ACTION: 3ms
+ POST /repo/114?sessionId=0290163c-46f7-40d0-ad38-40a1347b4b40 200 in 38ms
+(node:35842) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[34mDEBUG[39m [2025-02-07 01:14:56.033 +0300] (app): [36mLogger updated for AGENT:chatAgent[39m
+[34mDEBUG[39m [2025-02-07 01:14:56.035 +0300] (app): [36mLogger updated for AGENT:repoExplorer[39m
+[34mDEBUG[39m [2025-02-07 01:14:56.036 +0300] (app): [36mLogger updated for MEMORY:Memory[39m
