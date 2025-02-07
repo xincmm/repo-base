@@ -9,9 +9,7 @@
     "lint": "next lint",
     "db:gen": "pnpm drizzle-kit generate",
     "db:migrate": "pnpm drizzle-kit migrate",
-    "db:studio": "pnpm drizzle-kit studio",
-    "trigger:dev": "pnpm dlx trigger.dev@latest dev",
-    "trigger:deploy": "pnpm dlx trigger.dev@latest deploy"
+    "db:studio": "pnpm drizzle-kit studio"
   },
   "dependencies": {
     "@mastra/core": "0.2.0-alpha.89",
@@ -26,8 +24,6 @@
     "@radix-ui/react-separator": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.7",
-    "@trigger.dev/react-hooks": "^3.3.12",
-    "@trigger.dev/sdk": "3.3.12",
     "ai": "^4.1.11",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -65,7 +61,7 @@
     "@types/react-dom": "^19",
     "@types/react-syntax-highlighter": "^15.5.13",
     "babel-plugin-react-compiler": "19.0.0-beta-714736e-20250131",
-    "canvas": "^3.1.0",
+    "canvas": "^2.11.2",
     "drizzle-kit": "^0.30.2",
     "eslint": "^9",
     "eslint-config-next": "15.1.5",
@@ -74,6 +70,7 @@
     "jsdom": "^25.0.1",
     "libsql": "0.4.7",
     "mastra": "0.1.57-alpha.122",
+    "pathe": "1.1.2",
     "pgvector": "^0.2.0",
     "postcss": "^8",
     "require-in-the-middle": "^7.5.0",
