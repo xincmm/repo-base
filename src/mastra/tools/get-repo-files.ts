@@ -19,7 +19,9 @@ const inputSchema = z.object({
     .min(0)
     .optional()
     .describe(
-      "Maximum directory depth to return (0 = root files only, 1 = root + one level deep, etc.). Prefer starting with depth 0 first and increase the depth when you need to see more.",
+      `Maximum directory depth to return (0 = root files only, 1 = root + one level deep, etc.).
+       Prefer starting with depth 0 first and increase the depth when you need to see more.
+       If a prefix is provided, the depth field should still account for the levels needed to get content from the root.`,
     )
     .default(0),
   limit: z

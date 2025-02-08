@@ -7,9 +7,12 @@ import { repoLanguages, repoLanguagesRelations } from "./schema/repo-languages";
 import { repoFiles, repoFilesRelations } from "./schema/repo-files";
 import { repoTasks, repoTasksRelations } from "./schema/repo-tasks";
 import { batchHandles, batchHandlesRelations } from "./schema/batch-handles";
+import { Pool } from "pg";
+
+const client = new Pool({ connectionString: process.env.DATABASE_URL! });
 
 export const db = drizzle({
-  connection: process.env.DATABASE_URL!,
+  client,
   schema: {
     sessions,
     sessionsRelations,
