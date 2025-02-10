@@ -1,12 +1,12 @@
-import { PostgresStore } from "@mastra/store-pg";
+import { PostgresStore } from "@mastra/pg";
 import { Logger, Mastra } from "@mastra/core";
-// import { PgVector } from "@mastra/vector-pg";
 import { Memory } from "@mastra/memory";
 
 import { chatAgent } from "./agents/chat-agent";
 import { repoExplorer } from "./agents/repo-explorer";
 
 const memory = new Memory({
+  //@ts-expect-error logger property issue
   storage: new PostgresStore({
     connectionString: process.env.DATABASE_URL!,
   }),

@@ -19,14 +19,12 @@ export async function POST(req: NextRequest) {
   let threadId: string;
 
   if (!cookieThreadId) {
-    if (!mastra?.memory) throw new Error("Mastra memory not available");
-
     const newThreadId = (
-      await mastra.memory.createThread({
+      await mastra.memory?.createThread({
         resourceId: String(repoId),
         title: "",
       })
-    ).id;
+    )?.id;
 
     if (!newThreadId) throw new Error("Could not create a new thread");
 
@@ -45,10 +43,10 @@ export async function POST(req: NextRequest) {
     context.push({
       role: "system",
       content: `
-Use this as the repository details: ${JSON.stringify(repository)}.
-Don't mention the repository ID back to the user since it's an internal implementation detail.
-Don't mention the name of the tools to the user.
-`,
+  Use this as the repository details: ${JSON.stringify(repository)}.
+  Don't mention the repository ID back to the user since it's an internal implementation detail.
+  Don't mention the name of the tools to the user.
+  `,
     });
   } else {
     threadId = cookieThreadId.value;

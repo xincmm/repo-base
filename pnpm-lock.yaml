@@ -22,12 +22,12 @@ importers:
       '@mastra/memory':
         specifier: 0.1.0-alpha.71
         version: 0.1.0-alpha.71(encoding@0.1.13)(react@19.0.0)(zod@3.24.1)
+      '@mastra/pg':
+        specifier: 0.1.0-alpha.5
+        version: 0.1.0-alpha.5(ai@4.1.11(react@19.0.0)(zod@3.24.1))(encoding@0.1.13)(pg-query-stream@4.7.1(pg@8.13.1))
       '@mastra/rag':
         specifier: 0.1.0-alpha.81
         version: 0.1.0-alpha.81(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-providers@3.734.0)(@huggingface/transformers@3.3.2)(canvas@2.11.2(encoding@0.1.13))(cohere-ai@7.15.4(encoding@0.1.13))(encoding@0.1.13)(gpt-tokenizer@2.8.1)(openai@4.83.0(encoding@0.1.13)(ws@8.18.0)(zod@3.24.1))(pg-query-stream@4.7.1(pg@8.13.1))(pg@8.13.1)(pgvector@0.2.0)(react@19.0.0)(tree-sitter@0.22.4)(typescript@5.7.3(patch_hash=gsuzgzb7lbgg3ugl5ecqy2u5ym))(web-tree-sitter@0.24.7)(ws@8.18.0)
-      '@mastra/store-pg':
-        specifier: 0.0.0-alpha.8
-        version: 0.0.0-alpha.8(encoding@0.1.13)(pg-query-stream@4.7.1(pg@8.13.1))(react@19.0.0)
       '@mastra/vector-pg':
         specifier: 0.1.0-alpha.23
         version: 0.1.0-alpha.23(encoding@0.1.13)(react@19.0.0)
@@ -2013,6 +2013,12 @@ packages:
     resolution: {integrity: sha512-rz6OLydp/SqqZJGS/BjPmzHsTUAMPvocTMQsg4j4Oa6bq9346X4n+ZgXM9+dy/0NcPBiWL/W07pn1PzeVvjA3g==}
     engines: {node: '>=20'}
 
+  '@mastra/core@0.2.0-alpha.95':
+    resolution: {integrity: sha512-YhaLTyWP7TjG3c7yyYuWMsAsvahMnA7dQc+0TA1johtxEDkT0a37M0FpjYxbqx4nBbibssZYRvFisimB4T1M6A==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      ai: ^4.0.0
+
   '@mastra/deployer@0.0.1-alpha.20':
     resolution: {integrity: sha512-Tw0mdMOgneKt3+K11bmw1OqX6mM8bsUI1x72a4U+ryj2qCxHQEeo7Mk9FYRJt85D0jYOhRSFC97TujZOLlSd5A==}
 
@@ -2022,11 +2028,11 @@ packages:
   '@mastra/memory@0.1.0-alpha.71':
     resolution: {integrity: sha512-8QV0XGhB4C7nTsVlhmgosEdCrhoNLwHLu9dRNkrYiT6ogUiokSzYrWCsvWstbo0Tp0ecbbJpvkSZjFUNnJV/lA==}
 
+  '@mastra/pg@0.1.0-alpha.5':
+    resolution: {integrity: sha512-2hfIRE2/s7IErrwL8GllppaExS9x/x1ILomguV7g6R77I/84kx18NXC1Uw713VDuZ5H0J8qhkUW7U5pdmhmaig==}
+
   '@mastra/rag@0.1.0-alpha.81':
     resolution: {integrity: sha512-NofTPoHFuYk9xsSw4sBbHJFOj7s1C7fIfM2h8SWaxbGYPJJEAu79aQsSrLO4h3kQtJoMdnRy9pU6B+FZFWIeQw==}
-
-  '@mastra/store-pg@0.0.0-alpha.8':
-    resolution: {integrity: sha512-bIvr8qhD5pIx2C39K30alFg80BXRTqYNcYxJFJ6hFB8aRoAY5ssexwh3iWQY37oUIiGKYiBVCfQEfyAhaMgIWw==}
 
   '@mastra/vector-pg@0.1.0-alpha.23':
     resolution: {integrity: sha512-NhqeTyLxBqbNNQ/lo8WMtGBIm8BxtMPX/JE/qT3df6j5rDgAqtIcrLa+KKDG+Ce1Q0P1wvZC4+b50O8WNkCzAg==}
@@ -10711,6 +10717,35 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@mastra/core@0.2.0-alpha.95(ai@4.1.11(react@19.0.0)(zod@3.24.1))(encoding@0.1.13)':
+    dependencies:
+      '@libsql/client': 0.14.0
+      '@opentelemetry/api': 1.9.0
+      '@opentelemetry/auto-instrumentations-node': 0.53.0(@opentelemetry/api@1.9.0)(encoding@0.1.13)
+      '@opentelemetry/exporter-trace-otlp-http': 0.55.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/resources': 1.30.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-metrics': 1.30.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-node': 0.55.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-trace-base': 1.30.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/sdk-trace-node': 1.30.1(@opentelemetry/api@1.9.0)
+      '@opentelemetry/semantic-conventions': 1.28.0
+      ai: 4.1.11(react@19.0.0)(zod@3.24.1)
+      cohere-ai: 7.15.4(encoding@0.1.13)
+      date-fns: 3.6.0
+      json-schema: 0.4.0
+      pino: 9.6.0
+      pino-pretty: 13.0.0
+      radash: 12.1.0
+      sift: 17.1.3
+      xstate: 5.19.2
+      zod: 3.24.1
+    transitivePeerDependencies:
+      - aws-crt
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
+
   '@mastra/deployer@0.0.1-alpha.20(encoding@0.1.13)(react@19.0.0)':
     dependencies:
       '@mastra/core': 0.1.27-alpha.76(encoding@0.1.13)(react@19.0.0)
@@ -10785,6 +10820,21 @@ snapshots:
       - utf-8-validate
       - zod
 
+  '@mastra/pg@0.1.0-alpha.5(ai@4.1.11(react@19.0.0)(zod@3.24.1))(encoding@0.1.13)(pg-query-stream@4.7.1(pg@8.13.1))':
+    dependencies:
+      '@mastra/core': 0.2.0-alpha.95(ai@4.1.11(react@19.0.0)(zod@3.24.1))(encoding@0.1.13)
+      pg: 8.13.1
+      pg-promise: 11.10.2(pg-query-stream@4.7.1(pg@8.13.1))
+    transitivePeerDependencies:
+      - ai
+      - aws-crt
+      - bufferutil
+      - encoding
+      - pg-native
+      - pg-query-stream
+      - supports-color
+      - utf-8-validate
+
   '@mastra/rag@0.1.0-alpha.81(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-providers@3.734.0)(@huggingface/transformers@3.3.2)(canvas@2.11.2(encoding@0.1.13))(cohere-ai@7.15.4(encoding@0.1.13))(encoding@0.1.13)(gpt-tokenizer@2.8.1)(openai@4.83.0(encoding@0.1.13)(ws@8.18.0)(zod@3.24.1))(pg-query-stream@4.7.1(pg@8.13.1))(pg@8.13.1)(pgvector@0.2.0)(react@19.0.0)(tree-sitter@0.22.4)(typescript@5.7.3(patch_hash=gsuzgzb7lbgg3ugl5ecqy2u5ym))(web-tree-sitter@0.24.7)(ws@8.18.0)':
     dependencies:
       '@llamaindex/core': 0.4.21(@aws-crypto/sha256-js@5.2.0)(@huggingface/transformers@3.3.2)(gpt-tokenizer@2.8.1)(js-tiktoken@1.0.16)(pathe@2.0.2)
@@ -10840,21 +10890,6 @@ snapshots:
       - voyageai
       - web-tree-sitter
       - ws
-
-  '@mastra/store-pg@0.0.0-alpha.8(encoding@0.1.13)(pg-query-stream@4.7.1(pg@8.13.1))(react@19.0.0)':
-    dependencies:
-      '@mastra/core': 0.2.0-alpha.89(encoding@0.1.13)(react@19.0.0)
-      pg: 8.13.1
-      pg-promise: 11.10.2(pg-query-stream@4.7.1(pg@8.13.1))
-    transitivePeerDependencies:
-      - aws-crt
-      - bufferutil
-      - encoding
-      - pg-native
-      - pg-query-stream
-      - react
-      - supports-color
-      - utf-8-validate
 
   '@mastra/vector-pg@0.1.0-alpha.23(encoding@0.1.13)(react@19.0.0)':
     dependencies:
