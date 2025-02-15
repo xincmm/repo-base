@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
-import { ResourceProvider } from "@/providers/ResourceProvider";
 import { ThemeProvider } from "next-themes";
+import { Geist, Geist_Mono } from "next/font/google";
+
 import { SiteHeader } from "@/components/custom/SiteHeader";
+import { MemoizedResourceProvider } from "@/providers/ResourceProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,9 +36,9 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ResourceProvider resourceId={resourceId}>
+          <MemoizedResourceProvider resourceId={resourceId}>
             {children}
-          </ResourceProvider>
+          </MemoizedResourceProvider>
           <SiteHeader />
         </ThemeProvider>
       </body>
