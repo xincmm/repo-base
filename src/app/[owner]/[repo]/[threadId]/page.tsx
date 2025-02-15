@@ -1,6 +1,7 @@
-import { Assistant } from "@/app/assistant";
-import { mastra } from "@/mastra";
 import { AiMessageType } from "@mastra/core";
+
+import { mastra } from "@/mastra";
+import { Assistant } from "@/app/assistant";
 
 export default async function Page({
   params,

@@ -18,10 +18,7 @@ export const RepoThread: FC<RepoThreadProps> = async ({ thread }) => {
   });
 
   return (
-    <li
-      key={thread.id}
-      className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg"
-    >
+    <li key={thread.id} className="flex items-center space-x-4 p-4 bg-gray-50">
       <Avatar>
         <AvatarImage
           src={repo.data.owner.avatar_url}

@@ -42,18 +42,14 @@ export const InputForm: FC = () => {
     >
       <Input
         placeholder="facebook/react"
-        className="h-12 text-lg rounded-none"
+        className="h-12 text-lg"
         type="text"
         name="input"
         autoFocus
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      <Button
-        className="h-12 gap-2 rounded-none"
-        size="lg"
-        disabled={isPending}
-      >
+      <Button className="h-12 gap-2" size="lg" disabled={isPending}>
         {isPending ? (
           <LoaderCircle className="animate-spin size-5" />
         ) : (

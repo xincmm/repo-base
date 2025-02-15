@@ -97,7 +97,7 @@ const ToolContainer: FC<ToolContainerProps> = ({
   };
 
   return (
-    <Card className="my-1.5 rounded-2xl">
+    <Card className="my-1.5">
       <CardContent className="inline-flex items-center gap-2 p-3 text-sm">
         <span>{statusIconMap[status]}</span>
         <span className="font-semibold">{displayName}</span>
