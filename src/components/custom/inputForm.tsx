@@ -7,33 +7,37 @@ import { useAction } from "next-safe-action/hooks";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { validateRepositoryInput } from "@/actions/validateRepositoryInput";
+import { cn } from "@/lib/utils";
 
 export const InputForm: FC = () => {
   const [input, setInput] = useState("");
   const [, setErrorMessage] = useState<string | null>(null);
 
-  const { execute, isPending } = useAction(validateRepositoryInput, {
-    onError: ({ error }) => {
-      if (error.serverError) {
-        setErrorMessage(error.serverError);
-      } else if (
-        error.validationErrors?.input?._errors &&
-        error.validationErrors.input._errors.length > 0
-      ) {
-        setErrorMessage(error.validationErrors.input._errors[0]);
-      } else if (
-        error.validationErrors?._errors &&
-        error.validationErrors._errors.length > 0
-      ) {
-        setErrorMessage(error.validationErrors._errors[0]);
-      } else {
-        setErrorMessage("An unexpected error occurred.");
-      }
+  const { execute, hasErrored, isPending } = useAction(
+    validateRepositoryInput,
+    {
+      onError: ({ error }) => {
+        if (error.serverError) {
+          setErrorMessage(error.serverError);
+        } else if (
+          error.validationErrors?.input?._errors &&
+          error.validationErrors.input._errors.length > 0
+        ) {
+          setErrorMessage(error.validationErrors.input._errors[0]);
+        } else if (
+          error.validationErrors?._errors &&
+          error.validationErrors._errors.length > 0
+        ) {
+          setErrorMessage(error.validationErrors._errors[0]);
+        } else {
+          setErrorMessage("An unexpected error occurred.");
+        }
+      },
+      onSuccess: () => setErrorMessage(null),
     },
-    onSuccess: () => setErrorMessage(null),
-  });
+  );
 
-  const handleSubmit = () => execute({ input });
+  const handleSubmit = () => execute({ input, redirect: true });
 
   return (
     <form
@@ -42,7 +46,7 @@ export const InputForm: FC = () => {
     >
       <Input
         placeholder="facebook/react"
-        className="h-12 text-lg"
+        className={cn("h-12 text-lg", hasErrored && "ring-1 ring-destructive")}
         type="text"
         name="input"
         autoFocus

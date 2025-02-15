@@ -3,6 +3,8 @@
 import { z } from "zod";
 import { actionClient } from ".";
 import { redirect } from "next/navigation";
+import { gh } from "@/lib/utils";
+import { RepositoryError } from "./errors";
 
 const RepositoryInputSchema = z
   .string()
@@ -52,16 +54,28 @@ const RepositoryInputSchema = z
   });
 
 export const validateRepositoryInput = actionClient
-  .schema(z.object({ input: RepositoryInputSchema }))
+  .schema(z.object({ input: RepositoryInputSchema, redirect: z.boolean() }))
   .metadata({
     actionName: "validateRepositoryInput",
   })
   .action(async ({ parsedInput }) => {
     const {
       input: { owner, repo },
+      redirect: shouldRedirect,
     } = parsedInput;
 
-    //TODO: Validate {owner}/{repo} exists
+    try {
+      await gh.rest.repos.get({ owner, repo });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new RepositoryError(error.message);
+      }
+      throw new RepositoryError("Error fetching GitHub repository");
+    }
 
-    redirect(`/${owner}/${repo}`);
+    if (shouldRedirect) {
+      redirect(`/${owner}/${repo}`);
+    }
+
+    return { ok: true };
   });
