@@ -40,27 +40,33 @@ export default function Page() {
           <h2 className="text-xl font-semibold">Popular Repositories</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <SuggestedRepo
-              name="mastra-ai/mastra"
+              owner="mastra-ai"
+              repo="mastra"
               description="Open-source AI assistant framework"
             />
             <SuggestedRepo
-              name="assistant-ui/assistant-ui"
+              owner="assistant-ui"
+              repo="assistant/ui"
               description="Open-source UI components for AI assistants"
             />
             <SuggestedRepo
-              name="vercel/next.js"
+              owner="vercel"
+              repo="next.js"
               description="The React Framework for the Web"
             />
             <SuggestedRepo
-              name="facebook/react"
+              owner="facebok"
+              repo="react"
               description="The library for web and native user interfaces"
             />
             <SuggestedRepo
-              name="tailwindlabs/tailwindcss"
+              owner="tailwindlabs"
+              repo="tailwindcss"
               description="A utility-first CSS framework"
             />
             <SuggestedRepo
-              name="shadcn/ui"
+              owner="shadcn"
+              repo="ui"
               description="Beautifully designed components"
             />
           </div>
@@ -71,19 +77,23 @@ export default function Page() {
 }
 
 function SuggestedRepo({
-  name,
+  owner,
+  repo,
   description,
 }: {
-  name: string;
+  owner: string;
+  repo: string;
   description: string;
 }) {
   return (
-    <Link href={`/chat/${encodeURIComponent(name)}`} className="block h-full">
+    <Link href={`/${owner}/${repo}`} className="block h-full">
       <Card className="flex flex-col h-[140px] transition-all hover:border-primary hover:shadow-md rounded-none">
         <CardHeader className="grow">
           <CardTitle className="flex items-center gap-2 text-base truncate">
             <Github className="h-4 w-4 shrink-0" />
-            <span className="truncate">{name}</span>
+            <span className="truncate">
+              {owner}/{repo}
+            </span>
           </CardTitle>
           <CardDescription className="line-clamp-2">
             {description}
