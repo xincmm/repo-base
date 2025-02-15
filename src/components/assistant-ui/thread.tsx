@@ -44,7 +44,7 @@ export const Thread: FC = () => {
         />
 
         <ThreadPrimitive.If empty={false}>
-          <div className="min-h-8 flex-grow" />
+          <div className="min-h-8 grow" />
         </ThreadPrimitive.If>
 
         <div className="max-w-[var(--thread-max-width)] sticky bottom-0 mt-3 flex w-full flex-col items-center justify-end rounded-t-lg bg-inherit pb-4">
@@ -73,8 +73,8 @@ const ThreadScrollToBottom: FC = () => {
 const ThreadWelcome: FC = () => {
   return (
     <ThreadPrimitive.Empty>
-      <div className="max-w-[var(--thread-max-width)] flex w-full flex-grow flex-col">
-        <div className="flex w-full flex-grow flex-col items-center justify-center">
+      <div className="max-w-[var(--thread-max-width)] flex w-full grow flex-col">
+        <div className="flex w-full grow flex-col items-center justify-center">
           <Avatar>
             <AvatarFallback>Repo Base</AvatarFallback>
           </Avatar>
@@ -115,12 +115,12 @@ const ThreadWelcomeSuggestions: FC = () => {
 
 const Composer: FC = () => {
   return (
-    <ComposerPrimitive.Root className="focus-within:border-ring/20 flex w-full flex-wrap items-end rounded-lg border bg-inherit px-2.5 shadow-sm transition-colors ease-in">
+    <ComposerPrimitive.Root className="focus-within:border-ring/20 flex w-full flex-wrap items-end rounded-lg border bg-inherit px-2.5 shadow-xs transition-colors ease-in">
       <ComposerPrimitive.Input
         rows={1}
         autoFocus
         placeholder="Write a message..."
-        className="placeholder:text-muted-foreground max-h-40 flex-grow resize-none border-none bg-transparent px-2 py-4 text-sm outline-none focus:ring-0 disabled:cursor-not-allowed"
+        className="placeholder:text-muted-foreground max-h-40 grow resize-none border-none bg-transparent px-2 py-4 text-sm outline-hidden focus:ring-0 disabled:cursor-not-allowed"
       />
       <ComposerAction />
     </ComposerPrimitive.Root>
@@ -189,7 +189,7 @@ const UserActionBar: FC = () => {
 const EditComposer: FC = () => {
   return (
     <ComposerPrimitive.Root className="bg-muted max-w-[var(--thread-max-width)] my-4 flex w-full flex-col gap-2 rounded-xl">
-      <ComposerPrimitive.Input className="text-foreground flex h-8 w-full resize-none bg-transparent p-4 pb-0 outline-none" />
+      <ComposerPrimitive.Input className="text-foreground flex h-8 w-full resize-none bg-transparent p-4 pb-0 outline-hidden" />
 
       <div className="mx-3 mb-3 flex items-center justify-center gap-2 self-end">
         <ComposerPrimitive.Cancel asChild>

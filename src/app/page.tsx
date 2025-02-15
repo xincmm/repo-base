@@ -80,9 +80,9 @@ function SuggestedRepo({
   return (
     <Link href={`/chat/${encodeURIComponent(name)}`} className="block h-full">
       <Card className="flex flex-col h-[140px] transition-all hover:border-primary hover:shadow-md rounded-none">
-        <CardHeader className="flex-grow">
+        <CardHeader className="grow">
           <CardTitle className="flex items-center gap-2 text-base truncate">
-            <Github className="h-4 w-4 flex-shrink-0" />
+            <Github className="h-4 w-4 shrink-0" />
             <span className="truncate">{name}</span>
           </CardTitle>
           <CardDescription className="line-clamp-2">

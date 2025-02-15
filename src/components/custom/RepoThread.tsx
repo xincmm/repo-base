@@ -31,7 +31,7 @@ export const RepoThread: FC<RepoThreadProps> = async ({ thread }) => {
           {repo.data.full_name.substring(0, 2).toUpperCase()}
         </AvatarFallback>
       </Avatar>
-      <div className="flex-grow">
+      <div className="grow">
         {thread.title && <h3 className="font-semibold">{thread.title}</h3>}
         <p className="text-sm text-gray-500">{repo.data.full_name}</p>
         <p className="text-xs text-gray-400">
