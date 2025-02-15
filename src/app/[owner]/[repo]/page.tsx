@@ -29,12 +29,7 @@ export default async function Page({
   );
 
   return (
-    <EnsureThread
-      resourceId={resourceId}
-      owner={owner}
-      repo={repo}
-      threads={threads}
-    >
+    <EnsureThread owner={owner} repo={repo} threads={threads}>
       <main className="flex min-h-screen flex-col items-center p-4 md:p-24">
         <div className="w-full max-w-4xl space-y-8">
           <div className="flex items-center justify-between">
