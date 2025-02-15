@@ -1,19 +1,18 @@
 "use client";
 
-import { validateRepositoryInput } from "@/actions/validateRepositoryInput";
+import { type FC, useState } from "react";
+import { GitBranch as Github, LoaderCircle } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
-import { FC, useState } from "react";
-import { Button } from "../ui/button";
+
 import { Input } from "../ui/input";
-import { cn } from "@/lib/utils";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
+import { Button } from "../ui/button";
+import { validateRepositoryInput } from "@/actions/validateRepositoryInput";
 
 export const InputForm: FC = () => {
   const [input, setInput] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { execute } = useAction(validateRepositoryInput, {
+  const { execute, isPending } = useAction(validateRepositoryInput, {
     onError: ({ error }) => {
       if (error.serverError) {
         setErrorMessage(error.serverError);
@@ -37,48 +36,31 @@ export const InputForm: FC = () => {
   const handleSubmit = () => execute({ input });
 
   return (
-    <>
-      <form
-        className="w-full max-w-lg flex items-center gap-4"
-        action={handleSubmit}
+    <form
+      className="flex flex-col gap-4 sm:flex-row w-full"
+      action={handleSubmit}
+    >
+      <Input
+        placeholder="facebook/react"
+        className="h-12 text-lg rounded-none"
+        type="text"
+        name="input"
+        autoFocus
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+      <Button
+        className="h-12 gap-2 rounded-none"
+        size="lg"
+        disabled={isPending}
       >
-        <div className="space-y-3 w-full">
-          <Input
-            id="input"
-            name="input"
-            placeholder="facebook/react"
-            autoFocus
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-        </div>
-        <Button type="submit">import repository</Button>
-      </form>
-
-      <Alert
-        variant={errorMessage ? "destructive" : "default"}
-        className={cn("max-w-lg transition-transform")}
-      >
-        <AlertCircle className="size-4" />
-        <AlertTitle className="font-semibold mt-1 mb-2">
-          Input format
-        </AlertTitle>
-        <AlertDescription>
-          Accepts either the full GitHub repository URL
-          <span className="font-semibold">
-            {" (https://github.com/facebook/react) "}
-          </span>
-          or the shorthand
-          <span className="font-semibold">{" (facebook/react) "}</span> format.
-          {errorMessage && (
-            <>
-              <br />
-              <br />
-              <span className="font-semibold">Error:</span> {errorMessage}
-            </>
-          )}
-        </AlertDescription>
-      </Alert>
-    </>
+        {isPending ? (
+          <LoaderCircle className="animate-spin size-5" />
+        ) : (
+          <Github className="size-5" />
+        )}
+        Import repository
+      </Button>
+    </form>
   );
 };

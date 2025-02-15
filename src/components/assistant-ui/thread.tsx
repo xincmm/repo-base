@@ -76,7 +76,7 @@ const ThreadWelcome: FC = () => {
       <div className="max-w-[var(--thread-max-width)] flex w-full flex-grow flex-col">
         <div className="flex w-full flex-grow flex-col items-center justify-center">
           <Avatar>
-            <AvatarFallback>C</AvatarFallback>
+            <AvatarFallback>Repo Base</AvatarFallback>
           </Avatar>
           <p className="mt-4 font-medium">How can I help you today?</p>
         </div>

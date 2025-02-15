@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cookies } from "next/headers";
 import { ResourceProvider } from "@/providers/ResourceProvider";
+import { ThemeProvider } from "next-themes";
+import { SiteHeader } from "@/components/custom/SiteHeader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,11 +30,16 @@ export default async function RootLayout({
   const resourceId = (await cookies()).get("resourceId")?.value;
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ResourceProvider resourceId={resourceId}>{children}</ResourceProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ResourceProvider resourceId={resourceId}>
+            {children}
+          </ResourceProvider>
+          <SiteHeader />
+        </ThemeProvider>
       </body>
     </html>
   );
