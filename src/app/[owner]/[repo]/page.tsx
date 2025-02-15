@@ -1,9 +1,3 @@
-import { cookies } from "next/headers";
-
-import { mastra } from "@/mastra";
-import { EnsureThread } from "@/components/custom/EnsureThread";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
   GitBranch as Github,
@@ -11,19 +5,23 @@ import {
   Plus,
 } from "lucide-react";
 import Link from "next/link";
+import { cookies } from "next/headers";
+
+import { mastra } from "@/mastra";
+import { Button } from "@/components/ui/button";
+import { EnsureThread } from "@/components/custom/EnsureThread";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ owner: string; repo: string }>;
 }) {
-  // Fetch threads by resourceId
   const resourceId = (await cookies()).get("resourceId")!.value;
   const resourceThreads = await mastra.memory?.getThreadsByResourceId({
     resourceId,
   });
 
-  // filter to repository threads
   const { owner, repo } = await params;
   const threads = resourceThreads?.filter(
     (thread) =>
