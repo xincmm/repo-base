@@ -10,7 +10,7 @@ import { validateRepositoryInput } from "@/actions/validateRepositoryInput";
 
 export const InputForm: FC = () => {
   const [input, setInput] = useState("");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [, setErrorMessage] = useState<string | null>(null);
 
   const { execute, isPending } = useAction(validateRepositoryInput, {
     onError: ({ error }) => {
