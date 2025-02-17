@@ -5,6 +5,7 @@ import { memory } from "../memory";
 import { instructions } from "./instructions";
 import { getFilePaths } from "../tools/getFilePaths";
 import { getFileContent } from "../tools/getFileContent";
+import { getRepositoryStars } from "../tools/getRepositoryStars";
 import { getRepositoryIssues } from "../tools/getRepositoryIssues";
 import { getRepositoryCommits } from "../tools/getRepositoryCommits";
 import { getRepositoryPullRequests } from "../tools/getRepositoryPullRequests";
@@ -18,6 +19,7 @@ export const agent = new Agent({
   tools: {
     getFilePaths,
     getFileContent,
+    getRepositoryStars,
     getRepositoryIssues,
     getRepositoryCommits,
     getRepositoryPullRequests,

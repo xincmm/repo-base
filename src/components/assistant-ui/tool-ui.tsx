@@ -7,10 +7,17 @@ import {
   CheckCircle,
   LoaderCircle,
   OctagonX,
+  Star,
   TriangleAlert,
 } from "lucide-react";
 
 import { Card, CardContent } from "../ui/card";
+import {
+  GetRepositoryStarsArgs,
+  GetRepositoryStarsResults,
+} from "@/mastra/tools/getRepositoryStars";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart";
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 type ToolStatus = "running" | "complete" | "incomplete" | "requires-action";
 
@@ -455,11 +462,56 @@ export const GetRepositoryPullRequestsToolUI = makeAssistantToolUI<
   },
 });
 
+const GetRepositoryStarsToolUI = makeAssistantToolUI<
+  GetRepositoryStarsArgs,
+  GetRepositoryStarsResults
+>({
+  toolName: "getRepositoryStars",
+  render: ({ args, status, toolName, result }) => {
+    return (
+      <ChartContainer
+        config={{
+          starCount: {
+            label: "Star Count",
+            color: "var(--chart-1)",
+            icon: Star,
+          },
+        }}
+        className="min-h-[300px]"
+      >
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={Array.isArray(result) ? result : []}>
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) =>
+                new Date(value).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                })
+              }
+            />
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => `${value}`}
+            />
+            <Line type="natural" dataKey="starCount" strokeWidth={2} />
+            <ChartTooltip content={<ChartTooltipContent />} />
+          </LineChart>
+        </ResponsiveContainer>
+      </ChartContainer>
+    );
+  },
+});
+
 const ToolUIWrapper: FC = () => {
   return (
     <>
       <GetFilePathsToolUI />
       <GetFileContentToolUI />
+      <GetRepositoryStarsToolUI />
       <GetRepositoryIssuesToolUI />
       <GetRepositoryCommitsToolUI />
       <GetRepositoryPullRequestsToolUI />
