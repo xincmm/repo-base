@@ -1,10 +1,10 @@
-import { ArrowRight, GitBranch as Github, MessagesSquare } from "lucide-react";
 import Link from "next/link";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { ArrowRight, GitBranch as Github, MessagesSquare } from "lucide-react";
 
 import { mastra } from "@/mastra";
 import { Button } from "@/components/ui/button";
-import { EnsureThread } from "@/components/custom/EnsureThread";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { NewThreadWithRepoButton } from "@/components/custom/NewThreadButton";
 
@@ -13,19 +13,35 @@ export default async function Page({
 }: {
   params: Promise<{ owner: string; repo: string }>;
 }) {
-  const resourceId = (await cookies()).get("resourceId")!.value;
+  const [resourceId, { owner, repo }] = await Promise.all([
+    (await cookies()).get("resourceId")?.value,
+    await params,
+  ]);
+
+  if (!resourceId) return <div>No cookie</div>; // should not happen
+
   const resourceThreads = await mastra.memory?.getThreadsByResourceId({
     resourceId,
   });
 
-  const { owner, repo } = await params;
   const threads = resourceThreads?.filter(
     (thread) =>
       thread.metadata?.owner === owner && thread.metadata?.repo === repo,
   );
 
-  return (
-    <EnsureThread owner={owner} repo={repo} threads={threads}>
+  if (!threads || threads.length === 0) {
+    const thread = await mastra.memory?.createThread({
+      resourceId,
+      metadata: { owner, repo },
+    });
+
+    if (thread) {
+      redirect(`/${owner}/${repo}/${thread?.id}`);
+    } else {
+      return <div>Thread wasn&apos;t created</div>; // should not happen
+    }
+  } else {
+    return (
       <main className="flex min-h-screen flex-col items-center p-4 md:p-24">
         <div className="w-full max-w-4xl space-y-8">
           <div className="flex items-center justify-between">
@@ -82,6 +98,6 @@ export default async function Page({
           </div>
         </div>
       </main>
-    </EnsureThread>
-  );
+    );
+  }
 }

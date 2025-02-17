@@ -5,6 +5,7 @@ import { actionClient } from ".";
 import { redirect } from "next/navigation";
 import { gh } from "@/lib/utils";
 import { RepositoryError } from "./errors";
+import { cookies } from "next/headers";
 
 const RepositoryInputSchema = z
   .string()
@@ -58,12 +59,11 @@ export const validateRepositoryInput = actionClient
   .metadata({
     actionName: "validateRepositoryInput",
   })
-  .action(async ({ parsedInput }) => {
+  .action(async ({ parsedInput, ctx }) => {
     const {
       input: { owner, repo },
       redirect: shouldRedirect,
     } = parsedInput;
-
     try {
       await gh.rest.repos.get({ owner, repo });
     } catch (error) {
@@ -73,9 +73,30 @@ export const validateRepositoryInput = actionClient
       throw new RepositoryError("Error fetching GitHub repository");
     }
 
-    if (shouldRedirect) {
-      redirect(`/${owner}/${repo}`);
-    }
+    const resourceId = (await cookies()).get("resourceId")?.value;
+    if (!resourceId) throw new Error("Could not create thread");
 
-    return { ok: true };
+    const resourceThreads = await ctx.mastra.memory?.getThreadsByResourceId({
+      resourceId,
+    });
+
+    const threads = resourceThreads?.filter(
+      (thread) =>
+        thread.metadata?.owner === owner && thread.metadata?.repo === repo,
+    );
+
+    if (!threads || threads.length === 0) {
+      const thread = await ctx.mastra.memory?.createThread({
+        resourceId,
+        metadata: { owner, repo },
+      });
+
+      if (thread) {
+        if (shouldRedirect) redirect(`/${owner}/${repo}/${thread?.id}`);
+      } else {
+        throw new Error("Could not create thread");
+      }
+    } else {
+      if (shouldRedirect) redirect(`/${owner}/${repo}`);
+    }
   });
