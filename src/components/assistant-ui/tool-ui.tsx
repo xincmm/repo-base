@@ -4,6 +4,7 @@ import { z } from "zod";
 import type { FC, ReactNode } from "react";
 import { makeAssistantToolUI } from "@assistant-ui/react";
 import {
+  AlertCircle,
   CheckCircle,
   LoaderCircle,
   OctagonX,
@@ -18,6 +19,8 @@ import {
 } from "@/mastra/tools/getRepositoryStars";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart";
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Skeleton } from "../ui/skeleton";
+import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 
 type ToolStatus = "running" | "complete" | "incomplete" | "requires-action";
 
@@ -467,8 +470,8 @@ const GetRepositoryStarsToolUI = makeAssistantToolUI<
   GetRepositoryStarsResults
 >({
   toolName: "getRepositoryStars",
-  render: ({ args, status, toolName, result }) => {
-    return (
+  render: ({ args, status, result }) => {
+    const renderChart = () => (
       <ChartContainer
         config={{
           starCount: {
@@ -502,6 +505,46 @@ const GetRepositoryStarsToolUI = makeAssistantToolUI<
           </LineChart>
         </ResponsiveContainer>
       </ChartContainer>
+    );
+
+    const renderContent = () => {
+      switch (status.type) {
+        case "running":
+          return <Skeleton className="w-full h-[300px]" />;
+        case "complete":
+          return Array.isArray(result) && result.length > 0 ? (
+            renderChart()
+          ) : (
+            <p>No data available</p>
+          );
+        case "incomplete":
+        case "requires-action":
+          return (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>
+                {status.reason === "error"
+                  ? `An error occurred: ${status.error}`
+                  : `Operation incomplete: ${status.reason}`}
+              </AlertDescription>
+            </Alert>
+          );
+      }
+    };
+
+    return (
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-semibold">
+            Star Count for {args.owner}/{args.repo}
+          </h2>
+          <span className="text-sm text-muted-foreground">
+            Interval: {args.interval}
+          </span>
+        </div>
+        {renderContent()}
+      </div>
     );
   },
 });

@@ -42,61 +42,51 @@ export const getRepositoryStars = new Tool({
 
     try {
       const allStargazers = [];
-      let page = 1;
-      const perPage = 100; // Max allowed by GitHub API
 
-      // Fetch all stargazers using pagination
-      while (true) {
-        const response = await gh.rest.activity.listStargazersForRepo({
+      const iterator = gh.paginate.iterator(
+        gh.rest.activity.listStargazersForRepo,
+        {
           owner,
           repo,
-          per_page: perPage,
-          page,
+          per_page: 100,
           headers: {
             accept: "application/vnd.github.v3.star+json",
           },
-        });
+        },
+      );
 
-        if (response.data.length === 0) {
-          break; // No more stargazers
+      for await (const { data } of iterator) {
+        for (const star of data) {
+          if (!star.starred_at) continue;
+          allStargazers.push(new Date(star.starred_at));
         }
-
-        allStargazers.push(...response.data);
-        page++;
-      }
-
-      if (allStargazers.length === 0) {
-        return []; // No stargazers found
       }
 
       // Aggregate star counts by the specified interval
       const aggregatedStars: { [date: string]: number } = {};
 
       allStargazers.forEach((item) => {
-        if (!item.starred_at) return;
-
-        const starredDate = new Date(item.starred_at);
         let dateKey: string;
 
         switch (interval) {
           case "daily":
-            dateKey = starredDate.toISOString().split("T")[0]; // YYYY-MM-DD
+            dateKey = item.toISOString().split("T")[0]; // YYYY-MM-DD
             break;
           case "weekly": {
             // Calculate the start of the week (Sunday)
-            const dayOfWeek = starredDate.getDay(); // 0 for Sunday, 1 for Monday, etc.
-            const startDate = new Date(starredDate);
-            startDate.setDate(starredDate.getDate() - dayOfWeek);
+            const dayOfWeek = item.getDay(); // 0 for Sunday, 1 for Monday, etc.
+            const startDate = new Date(item);
+            startDate.setDate(item.getDate() - dayOfWeek);
             dateKey = startDate.toISOString().split("T")[0]; // YYYY-MM-DD of Sunday
             break;
           }
           case "monthly":
-            dateKey = `${starredDate.getFullYear()}-${String(
-              starredDate.getMonth() + 1,
+            dateKey = `${item.getFullYear()}-${String(
+              item.getMonth() + 1,
             ).padStart(2, "0")}`; // YYYY-MM
             break;
           default:
-            dateKey = starredDate.toISOString().split("T")[0];
+            dateKey = item.toISOString().split("T")[0];
         }
 
         aggregatedStars[dateKey] = (aggregatedStars[dateKey] || 0) + 1;
