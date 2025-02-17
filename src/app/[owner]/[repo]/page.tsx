@@ -1,9 +1,4 @@
-import {
-  ArrowRight,
-  GitBranch as Github,
-  MessagesSquare,
-  Plus,
-} from "lucide-react";
+import { ArrowRight, GitBranch as Github, MessagesSquare } from "lucide-react";
 import Link from "next/link";
 import { cookies } from "next/headers";
 
@@ -11,6 +6,7 @@ import { mastra } from "@/mastra";
 import { Button } from "@/components/ui/button";
 import { EnsureThread } from "@/components/custom/EnsureThread";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { NewThreadWithRepoButton } from "@/components/custom/NewThreadButton";
 
 export default async function Page({
   params,
@@ -42,19 +38,18 @@ export default async function Page({
                 {owner}/{repo}
               </p>
             </div>
-            <Button className="gap-2 rounded-none" asChild>
-              <Link href={`/chat/${repo}/new`}>
-                <Plus className="h-4 w-4" />
-                New chat with repo
-              </Link>
-            </Button>
+            <NewThreadWithRepoButton
+              owner={owner}
+              repo={repo}
+              resourceId={resourceId}
+            />
           </div>
 
           <div className="space-y-4">
             {threads?.map((thread) => (
               <Link
                 key={thread.id}
-                href={`/chat/${repo}/${thread.id}`}
+                href={`/${owner}/${repo}/${thread.id}`}
                 className="block"
               >
                 <Card className="transition-all hover:border-primary hover:shadow-md rounded-none">

@@ -24,7 +24,7 @@ export const NewThreadWithRepoButton: FC<NewThreadWithRepoButtonProps> = ({
       disabled={isPending}
       onClick={() => execute({ owner, repo, resourceId })}
     >
-      <Plus className="w-4 h-4 mr-2" />
+      <Plus className="size-4" />
       New chat with repo
     </Button>
   );
