@@ -90,25 +90,25 @@ const ThreadWelcome: FC = () => {
 
 const ThreadWelcomeSuggestions: FC = () => {
   return (
-    <div className="mt-3 flex w-full items-stretch justify-center gap-4">
+    <div className="mt-3 flex flex-wrap w-full items-stretch justify-center gap-4">
       <ThreadPrimitive.Suggestion
         className="hover:bg-muted/80 flex max-w-sm grow basis-0 flex-col items-center justify-center border p-3 transition-colors ease-in"
-        prompt="What is the weather in Tokyo?"
+        prompt="Summarize the main functionality of this repository."
         method="replace"
         autoSend
       >
         <span className="line-clamp-2 text-ellipsis text-sm font-semibold">
-          What is the weather in Tokyo?
+          Summarize the main functionality of this repository.
         </span>
       </ThreadPrimitive.Suggestion>
       <ThreadPrimitive.Suggestion
         className="hover:bg-muted/80 flex max-w-sm grow basis-0 flex-col items-center justify-center  border p-3 transition-colors ease-in"
-        prompt="What is assistant-ui?"
+        prompt="What are the recent bug fixes and improvements?"
         method="replace"
         autoSend
       >
         <span className="line-clamp-2 text-ellipsis text-sm font-semibold">
-          What is assistant-ui?
+          What are the recent bug fixes and improvements?
         </span>
       </ThreadPrimitive.Suggestion>
     </div>
