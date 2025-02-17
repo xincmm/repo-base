@@ -1,6 +1,6 @@
 "use client";
 
-import type { FC } from "react";
+import { type FC } from "react";
 import { useParams } from "next/navigation";
 import type { AiMessageType } from "@mastra/core";
 import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
