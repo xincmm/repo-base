@@ -3,15 +3,28 @@ import { SuggestedRepo } from "@/components/custom/SuggestedRepo";
 
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 md:p-24 w-full">
       <div className="w-full max-w-3xl space-y-8">
         <div className="space-y-4 text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
             Repo Chat
           </h1>
-          <p className="text-lg text-muted-foreground">
-            Chat with any GitHub repository. Understand code faster.
-          </p>
+          <div className="space-y-1">
+            <p className="text-lg text-secondary-foreground">
+              Chat with any GitHub repository. Understand code faster.
+            </p>
+
+            <p className="text-sm text-muted-foreground">
+              Made with ❤️ love from{" "}
+              <a className="underline" href="https://mastra.ai/">
+                mastra.ai
+              </a>{" "}
+              and{" "}
+              <a className="underline" href="https://assistant-ui.com">
+                assistant-ui
+              </a>
+            </p>
+          </div>
         </div>
 
         <div className="bg-background p-6">

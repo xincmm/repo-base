@@ -26,7 +26,7 @@ export const Assistant: FC<AssistantProps> = ({ initialMessages }) => {
 
   return (
     <AssistantRuntimeProvider runtime={runtime}>
-      <div className="h-dvh">
+      <div className="h-dvh w-full">
         <Thread />
         <ToolUIWrapper />
       </div>

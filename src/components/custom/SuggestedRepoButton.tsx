@@ -21,7 +21,7 @@ export function SuggestedRepoButton({
   return (
     <Card
       onClick={() => execute({ owner: owner, repo: repo })}
-      className="flex flex-col h-[140px] transition-all hover:border-primary hover:shadow-md rounded-none cursor-pointer"
+      className="flex flex-col h-[140px] transition-all hover:border-primary hover:shadow-md cursor-pointer rounded-md"
     >
       <CardHeader className="grow">
         <CardTitle className="flex items-center gap-2 text-base truncate">
