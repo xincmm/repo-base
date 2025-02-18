@@ -59,7 +59,7 @@ export const InputForm: FC = () => {
         ) : (
           <Github className="size-5" />
         )}
-        Import repository
+        Chat with repository
       </Button>
     </form>
   );
