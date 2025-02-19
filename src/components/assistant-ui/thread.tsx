@@ -117,7 +117,7 @@ const ThreadWelcomeSuggestions: FC = () => {
 
 const Composer: FC = () => {
   return (
-    <ComposerPrimitive.Root className="focus-within:border-ring/20 flex w-full flex-wrap items-end  border bg-inherit px-2.5 shadow-xs transition-colors ease-in">
+    <ComposerPrimitive.Root className="focus-within:border-ring/20 flex w-full flex-wrap items-end  border bg-inherit px-2.5 shadow-xs transition-colors ease-in rounded-lg">
       <ComposerPrimitive.Input
         rows={1}
         autoFocus
@@ -163,7 +163,7 @@ const UserMessage: FC = () => {
     <MessagePrimitive.Root className="grid auto-rows-auto grid-cols-[minmax(72px,1fr)_auto] gap-y-2 [&:where(>*)]:col-start-2 max-w-[var(--thread-max-width)] w-full py-4">
       <UserActionBar />
 
-      <div className="bg-muted text-foreground max-w-[calc(var(--thread-max-width)*0.8)] break-words px-5 py-2.5 col-start-2 row-start-2">
+      <div className="bg-muted text-foreground max-w-[calc(var(--thread-max-width)*0.8)] break-words px-5 py-2.5 col-start-2 row-start-2 rounded-lg">
         <MessagePrimitive.Content />
       </div>
 
@@ -219,9 +219,9 @@ const AssistantMessage: FC = () => {
             tools: { by_name: ToolsByNameComponents },
           }}
         />
-      </div>
 
-      <AssistantActionBar />
+        <AssistantActionBar />
+      </div>
 
       <BranchPicker className="col-start-2 row-start-2 -ml-2 mr-2" />
     </MessagePrimitive.Root>
@@ -234,7 +234,7 @@ const AssistantActionBar: FC = () => {
       hideWhenRunning
       autohide="not-last"
       autohideFloat="single-branch"
-      className="text-muted-foreground flex gap-1 col-start-3 row-start-2 -ml-1"
+      className="text-muted-foreground flex gap-1 col-start-3 row-start-2 -ml-1 absolute"
     >
       {/* <MessagePrimitive.If speaking={false}>
         <ActionBarPrimitive.Speak asChild>
