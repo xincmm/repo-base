@@ -15,7 +15,7 @@ export default async function RepoLayout({
   return (
     <SidebarProvider>
       <EnsureRepo>
-        <AppSidebar owner={owner} repo={repo}></AppSidebar>
+        <AppSidebar owner={owner} repo={repo} />
         {children}
       </EnsureRepo>
     </SidebarProvider>

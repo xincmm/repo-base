@@ -27,6 +27,10 @@ export default async function Page({
         : m.content,
   }));
 
-  //@ts-expect-error type mismatch
-  return <Assistant initialMessages={initialMessages} />;
+  return (
+    <Assistant
+      //@ts-expect-error type mismatch
+      initialMessages={initialMessages}
+    />
+  );
 }

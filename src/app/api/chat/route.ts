@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       await memory.updateThread({
         id: threadId,
         title,
-        metadata: { owner, repo },
+        metadata: { owner, repo, nextThread: false },
       });
     }
   }

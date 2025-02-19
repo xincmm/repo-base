@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { mastra } from "@/mastra";
 
@@ -19,25 +19,30 @@ export default async function Page({
     resourceId,
   });
 
-  const threads = resourceThreads?.filter(
-    (thread) =>
-      thread.metadata?.owner === owner && thread.metadata?.repo === repo,
-  );
+  const repoThreads =
+    resourceThreads?.filter(
+      (thread) =>
+        thread.metadata?.owner === owner && thread.metadata?.repo === repo,
+    ) ?? [];
 
-  if (!threads || threads.length === 0) {
+  const nextThread = repoThreads.find((t) => !!t.metadata?.nextThread);
+
+  let threadId: string;
+
+  if (!nextThread) {
     const thread = await mastra.memory?.createThread({
       resourceId,
-      metadata: { owner, repo },
+      metadata: { owner, repo, nextThread: true },
     });
 
     if (thread) {
-      redirect(`/${owner}/${repo}/${thread?.id}`);
+      threadId = thread.id;
     } else {
-      return <div>Thread wasn&apos;t created</div>; // should not happen
+      notFound();
     }
   } else {
-    return (
-      <main className="flex flex-col items-center p-4 md:p-24 w-full"></main>
-    );
+    threadId = nextThread.id;
   }
+
+  redirect(`/${owner}/${repo}/${threadId}`);
 }
