@@ -2,13 +2,13 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { NextRequest } from "next/server";
 
-import { mastra } from "@/mastra";
+import { memory } from "@/mastra/memory";
 
 export async function POST(req: NextRequest) {
   const { owner, repo } = await req.json();
 
   const resourceId = (await cookies()).get("resourceId")!.value;
-  const resourceThreads = await mastra.memory?.getThreadsByResourceId({
+  const resourceThreads = await memory.getThreadsByResourceId({
     resourceId,
   });
 
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   );
 
   if (!threads || threads.length === 0) {
-    const thread = await mastra.memory?.createThread({
+    const thread = await memory.createThread({
       resourceId,
       metadata: { owner, repo },
     });

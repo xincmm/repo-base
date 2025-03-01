@@ -13,12 +13,14 @@ export const createThread = actionClient
 
     if (!resourceId) throw new Error("Could not create thread");
 
-    const thread = await ctx.mastra.memory?.createThread({
+    const thread = await ctx.memory?.createThread({
       resourceId,
       metadata: { owner, repo },
     });
 
     if (!thread) throw new Error("Could not create thread");
+
+    console.log("thread", thread.id);
 
     redirect(`/${owner}/${repo}/${thread.id}`);
   });

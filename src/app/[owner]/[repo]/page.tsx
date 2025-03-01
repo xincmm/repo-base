@@ -1,36 +1,26 @@
 import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-import { mastra } from "@/mastra";
+import { memory } from "@/mastra/memory";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ owner: string; repo: string }>;
-}) {
-  const [resourceId, { owner, repo }] = await Promise.all([
-    (await cookies()).get("resourceId")?.value,
-    await params,
-  ]);
+export default async function Page({ params }: { params: Promise<{ owner: string; repo: string }> }) {
+  const [resourceId, { owner, repo }] = await Promise.all([(await cookies()).get("resourceId")?.value, await params]);
 
   if (!resourceId) return <div>No cookie</div>; // should not happen
 
-  const resourceThreads = await mastra.memory?.getThreadsByResourceId({
+  const resourceThreads = await memory.getThreadsByResourceId({
     resourceId,
   });
 
   const repoThreads =
-    resourceThreads?.filter(
-      (thread) =>
-        thread.metadata?.owner === owner && thread.metadata?.repo === repo,
-    ) ?? [];
+    resourceThreads?.filter((thread) => thread.metadata?.owner === owner && thread.metadata?.repo === repo) ?? [];
 
   const nextThread = repoThreads.find((t) => !!t.metadata?.nextThread);
 
   let threadId: string;
 
   if (!nextThread) {
-    const thread = await mastra.memory?.createThread({
+    const thread = await memory?.createThread({
       resourceId,
       metadata: { owner, repo, nextThread: true },
     });

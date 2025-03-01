@@ -11,24 +11,23 @@ export const listThreadsOrCreateNewThread = actionClient
     z.object({
       owner: z.string(),
       repo: z.string(),
-    }),
+    })
   )
   .action(async ({ parsedInput, ctx }) => {
     const { owner, repo } = parsedInput;
     const resourceId = (await cookies()).get("resourceId")?.value;
     if (!resourceId) throw new Error("Could not create thread");
 
-    const resourceThreads = await ctx.mastra.memory?.getThreadsByResourceId({
+    const resourceThreads = await ctx.memory?.getThreadsByResourceId({
       resourceId,
     });
 
     const threads = resourceThreads?.filter(
-      (thread) =>
-        thread.metadata?.owner === owner && thread.metadata?.repo === repo,
+      (thread) => thread.metadata?.owner === owner && thread.metadata?.repo === repo
     );
 
     if (!threads || threads.length === 0) {
-      const thread = await ctx.mastra.memory?.createThread({
+      const thread = await ctx.memory?.createThread({
         resourceId,
         metadata: { owner, repo },
       });

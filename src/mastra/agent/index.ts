@@ -12,7 +12,7 @@ import { getRepositoryPullRequests } from "../tools/getRepositoryPullRequests";
 export const agent = new Agent({
   name: "agent",
   instructions,
-  //@ts-expect-error incompatible logger types
+  //@ts-expect-error incompatible memory types
   memory,
   model: google("gemini-2.0-flash-001"),
   tools: {

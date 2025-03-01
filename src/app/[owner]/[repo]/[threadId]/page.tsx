@@ -1,21 +1,14 @@
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
-import { mastra } from "@/mastra";
+import { memory } from "@/mastra/memory";
 import { Assistant } from "@/app/assistant";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ owner: string; repo: string; threadId: string }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ owner: string; repo: string; threadId: string }> }) {
   const resourceId = (await cookies()).get("resourceId")?.value;
   const { threadId } = await params;
 
-  const [queryResponse, thread] = await Promise.all([
-    mastra.memory?.query({ threadId }),
-    mastra.memory?.getThreadById({ threadId }),
-  ]);
+  const [queryResponse, thread] = await Promise.all([memory.query({ threadId }), memory.getThreadById({ threadId })]);
 
   if (!thread || !resourceId) notFound();
 

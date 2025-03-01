@@ -5,7 +5,7 @@ import { memory } from "@/mastra/memory";
 import type { CoreUserMessage } from "@assistant-ui/react";
 
 export async function POST(req: NextRequest) {
-  if (!mastra.memory) throw new Error("Mastra memory not set up");
+  if (!memory) throw new Error("Mastra memory not set up");
   const resourceId = req.cookies.get("resourceId")!.value;
 
   const { messages, owner, repo, threadId } = await req.json();
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
    * Since we're manually creating threads, this ensures we generate a title from the first user message
    */
   if (messages.length === 1) {
-    const thread = await mastra.memory?.getThreadById({ threadId });
+    const thread = await memory?.getThreadById({ threadId });
 
     if (!thread?.title || thread?.title === "New Thread") {
       const agent = mastra.getAgent("agent");

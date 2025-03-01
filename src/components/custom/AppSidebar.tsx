@@ -11,30 +11,23 @@ import {
   SidebarMenuItem,
   SidebarMenuSkeleton,
 } from "../ui/sidebar";
-import { mastra } from "@/mastra";
+import { memory } from "@/mastra/memory";
 import Link from "next/link";
 import { CustomSidebarMenuItem } from "./CustomSidebarMenuItem";
 import { Home } from "lucide-react";
 import { NewThreadWithRepoButton } from "./NewThreadButton";
 
-export const AppSidebar = async ({
-  owner,
-  repo,
-}: {
-  owner: string;
-  repo: string;
-}) => {
+export const AppSidebar = async ({ owner, repo }: { owner: string; repo: string }) => {
   const resourceId = (await cookies()).get("resourceId")?.value;
 
   if (resourceId) {
     const grouped = Object.groupBy(
       (
-        (await mastra.memory?.getThreadsByResourceId({
+        (await memory.getThreadsByResourceId({
           resourceId,
         })) ?? []
-      ).sort((a, b) => b.createdAt.getDate() - a.createdAt.getDate()),
-      ({ metadata }) =>
-        metadata?.owner === owner && metadata?.repo === repo ? "repo" : "other",
+      ).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
+      ({ metadata }) => (metadata?.owner === owner && metadata?.repo === repo ? "repo" : "other")
     );
 
     return (
@@ -52,11 +45,7 @@ export const AppSidebar = async ({
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            <NewThreadWithRepoButton
-              owner={owner}
-              repo={repo}
-              resourceId={resourceId}
-            />
+            <NewThreadWithRepoButton owner={owner} repo={repo} resourceId={resourceId} />
             <SidebarGroupLabel>
               Chats with {owner}/{repo}
             </SidebarGroupLabel>
@@ -72,10 +61,7 @@ export const AppSidebar = async ({
               {grouped["other"]?.map((t) => (
                 <SidebarMenuItem key={t.id} className="truncate">
                   <SidebarMenuButton className="h-min gap-0.5" asChild>
-                    <Link
-                      href={`/${t.metadata?.owner}/${t.metadata?.repo}/${t.id}`}
-                      className="flex-col items-start"
-                    >
+                    <Link href={`/${t.metadata?.owner}/${t.metadata?.repo}/${t.id}`} className="flex-col items-start">
                       <p className="w-full truncate">{t.title}</p>
                       <p className="text-xs text-muted-foreground w-full truncate">
                         {`${t.metadata?.owner as string}/${t.metadata?.repo as string}`}

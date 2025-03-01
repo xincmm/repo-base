@@ -46,9 +46,8 @@ const RepositoryInputSchema = z
         : false;
     },
     {
-      message:
-        "Invalid repository format. Please use 'owner/repo' or a valid GitHub URL.",
-    },
+      message: "Invalid repository format. Please use 'owner/repo' or a valid GitHub URL.",
+    }
   )
   .transform((val) => {
     return val as { owner: string; repo: string };
@@ -76,17 +75,16 @@ export const validateRepositoryInput = actionClient
     const resourceId = (await cookies()).get("resourceId")?.value;
     if (!resourceId) throw new Error("Could not create thread");
 
-    const resourceThreads = await ctx.mastra.memory?.getThreadsByResourceId({
+    const resourceThreads = await ctx.memory?.getThreadsByResourceId({
       resourceId,
     });
 
     const threads = resourceThreads?.filter(
-      (thread) =>
-        thread.metadata?.owner === owner && thread.metadata?.repo === repo,
+      (thread) => thread.metadata?.owner === owner && thread.metadata?.repo === repo
     );
 
     if (!threads || threads.length === 0) {
-      const thread = await ctx.mastra.memory?.createThread({
+      const thread = await ctx.memory?.createThread({
         resourceId,
         metadata: { owner, repo },
       });
