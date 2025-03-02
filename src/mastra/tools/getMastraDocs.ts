@@ -1,4 +1,3 @@
-import { gh } from "@/lib/utils";
 import { Tool } from "@mastra/core/tools";
 import { z } from "zod";
 
@@ -21,15 +20,14 @@ const outputSchema = z.union([
     .describe("The error/failed object"),
 ]);
 
-export const getFileContent = new Tool({
-  id: "fetchFileContent",
+export const getMastraDocs = new Tool({
+  id: "fetchMastraDocs",
   description: "Fetch the Mastra documentation file content",
   inputSchema,
   outputSchema,
   execute: async ({ context }) => {
     const { path } = context;
-    console.log("path", path);
-    const res = await fetch(`http://localhost:61950/${path}`);
+    const res = await fetch(`http://localhost:3000/${path}`);
     const content = await res.text();
 
     return {

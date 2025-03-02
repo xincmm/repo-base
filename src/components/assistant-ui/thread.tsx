@@ -94,19 +94,19 @@ const ThreadWelcomeSuggestions: FC = () => {
     <div className="mt-3 flex flex-wrap w-full items-stretch justify-center gap-4">
       <ThreadPrimitive.Suggestion
         className="hover:bg-muted/80 flex max-w-sm grow basis-0 flex-col items-center justify-center border p-3 transition-colors ease-in rounded-lg"
-        prompt="What's changed in recent commits?"
+        prompt="Mastra 的 Agent Memory 是什么？"
         method="replace"
         autoSend
       >
-        <span className="line-clamp-2 text-ellipsis text-sm font-semibold">What&apos;s changed in recent commits?</span>
+        <span className="line-clamp-2 text-ellipsis text-sm font-semibold">Mastra 的 Agent Memory 是什么？</span>
       </ThreadPrimitive.Suggestion>
       <ThreadPrimitive.Suggestion
         className="hover:bg-muted/80 flex max-w-sm grow basis-0 flex-col items-center justify-center  border p-3 transition-colors ease-in rounded-lg"
-        prompt="Guide me through this codebase"
+        prompt="Mastra 的 Multi-Agent Workflow 是什么？"
         method="replace"
         autoSend
       >
-        <span className="line-clamp-2 text-ellipsis text-sm font-semibold">Guide me through this codebase</span>
+        <span className="line-clamp-2 text-ellipsis text-sm font-semibold">Mastra 的 Multi-Agent Workflow 是什么？</span>
       </ThreadPrimitive.Suggestion>
     </div>
   );
