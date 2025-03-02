@@ -16,10 +16,10 @@ export const agent = new Agent({
   memory,
   model: google("gemini-2.0-flash-001"),
   tools: {
-    getFilePaths,
+    // getFilePaths,
     getFileContent,
-    getRepositoryIssues,
-    getRepositoryCommits,
-    getRepositoryPullRequests,
+    // getRepositoryIssues,
+    // getRepositoryCommits,
+    // getRepositoryPullRequests,
   },
 });
